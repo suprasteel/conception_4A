@@ -1,9 +1,9 @@
 package fr.esiea.poo;
 
-public class Objet
+public class Produit
 {
 
-	public Objet(String id, String description)
+	public Produit(String id, String description)
 	{
 		// TODO Auto-generated constructor stub
 	}
