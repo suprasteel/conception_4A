@@ -11,7 +11,7 @@ public interface Vendeur
 	 * @param dateLimite
 	 * @return l'enchère créée
 	 */
-	Enchere creerEnchere(Objet obj, Date dateLimite);
+	Enchere creerEnchere(Produit obj, Date dateLimite);
 
 	/**
 	 * Crée une enchere avec un prix minimum
@@ -21,7 +21,7 @@ public interface Vendeur
 	 * @param prixMin
 	 * @return l'enchère créée
 	 */
-	Enchere creerEncherePrixMin(Objet obj, Date dateLimite, double prixMin);
+	Enchere creerEncherePrixMin(Produit obj, Date dateLimite, double prixMin);
 
 	/**
 	 * Crée une enchere avec un prix de réserve
@@ -31,7 +31,7 @@ public interface Vendeur
 	 * @param prixReserve
 	 * @return l'enchère créée
 	 */
-	Enchere creerEncherePrixReserve(Objet obj, Date dateLimite, double prixReserve);
+	Enchere creerEncherePrixReserve(Produit obj, Date dateLimite, double prixReserve);
 
 	/**
 	 * Crée une enchère avec tout les arguments
@@ -42,8 +42,18 @@ public interface Vendeur
 	 * @param prixReserve
 	 * @return l'enchère créée
 	 */
-	Enchere creerEnchere(Objet obj, Date dateLimite, double prixMin, double prixReserve);
+	Enchere creerEnchere(Produit obj, Date dateLimite, double prixMin, double prixReserve);
 
+	/**
+	 * Publie l'ennchere en parametre
+	 * @param ench
+	 */
 	void publierEnchere(Enchere ench);
+
+	/**
+	 * Annule l'enchère passée en paramètre
+	 * @param ench
+	 */
+	void annulerEnchere(Enchere ench);
 
 }

@@ -1,50 +1,63 @@
 package fr.esiea.poo;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class User implements Acheteur, Vendeur
 {
+	ArrayList<Enchere> userEnchere = new ArrayList<Enchere>();
 
 	@Override
-	public Enchere creerEnchere(Objet obj, Date dateLimite)
+	public Enchere creerEnchere(Produit obj, Date dateLimite)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Enchere enchere = new Enchere(obj, dateLimite);
+		userEnchere.add(enchere);
+		return enchere;
 	}
 
 	@Override
-	public Enchere creerEncherePrixMin(Objet obj, Date dateLimite, double d)
+	public Enchere creerEncherePrixMin(Produit obj, Date dateLimite, double prixMin)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Enchere enchere = new Enchere(obj, dateLimite, prixMin, 0);
+		userEnchere.add(enchere);
+		return enchere;
 	}
 
 	@Override
-	public Enchere creerEncherePrixReserve(Objet obj, Date dateLimite, double d)
+	public Enchere creerEncherePrixReserve(Produit obj, Date dateLimite, double prixReserve)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Enchere enchere = new Enchere(obj, dateLimite, 0, prixReserve);
+		userEnchere.add(enchere);
+		return enchere;
 	}
 
 	@Override
-	public Enchere creerEnchere(Objet obj, Date dateLimite, double prixMin, double prixReserve)
+	public Enchere creerEnchere(Produit obj, Date dateLimite, double prixMin, double prixReserve)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Enchere enchere = new Enchere(obj, dateLimite, prixMin, prixReserve);
+		userEnchere.add(enchere);
+		return enchere;
 	}
 
 	@Override
 	public void emettreOffre(Offre offre)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void publierEnchere(Enchere ench)
 	{
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public void annulerEnchere(Enchere ench)
+	{
+		// TODO Auto-generated method stub
+
 	}
 
 }
