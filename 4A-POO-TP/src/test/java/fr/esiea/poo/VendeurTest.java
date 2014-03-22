@@ -110,8 +110,7 @@ public class VendeurTest
 			this.vendeur.publierEnchere(ench);
 		} catch (ForbiddenBidUpdate e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 
 		Assert.assertEquals(ench.getEtat(), Etat.PUBLIEE);
@@ -125,12 +124,12 @@ public class VendeurTest
 	@Test
 	public void testAnnulerEnchere()
 	{
-		Enchere ench = this.vendeur.creerEnchere(obj, dateLimite, prixMin, prixReserve);
+		Enchere ench = vendeur.creerEnchere(obj, dateLimite, prixMin, prixReserve);
 
 		try
 		{
 			vendeur.publierEnchere(ench);
-			this.vendeur.annulerEnchere(ench);
+			vendeur.annulerEnchere(ench);
 		} catch (ForbiddenBidUpdate e)
 		{
 			System.err.println(e.getMessage());
