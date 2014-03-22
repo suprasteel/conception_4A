@@ -5,7 +5,10 @@ import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import fr.esiea.poo.exception.ForbiddenBidUpdate;
 
 public class VendeurTest
 {
@@ -13,11 +16,18 @@ public class VendeurTest
 	private Produit obj;
 	private Date dateLimite;
 	private double prixMin, prixReserve;
+	private static SalleEnchere salesHouse;
+
+	@BeforeClass
+	public static void setUpBeforeClass()
+	{
+		salesHouse = SalleEnchere.getInstance();
+	}
 
 	@Before
 	public void setUp()
 	{
-		this.vendeur = new User();
+		this.vendeur = new User("testUser", "User", "Test");
 		this.obj = new Produit("1234A", "Obj test");
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, 30);
@@ -26,6 +36,10 @@ public class VendeurTest
 		this.prixReserve = 49.99;
 	}
 
+	/**
+	 * Test qui crée un enchère simple, avec prix de réserve et prix minimum par
+	 * défaut
+	 */
 	@Test
 	public void testCreerEnchereSimple()
 	{
@@ -34,8 +48,13 @@ public class VendeurTest
 		Enchere e = this.vendeur.creerEnchere(obj, dateLimite);
 
 		Assert.assertEquals(ench, e);
+		Assert.assertTrue(salesHouse.getEnchereCrees().contains(e));
+		Assert.assertFalse(salesHouse.getEncherePubliees().contains(e));
 	}
 
+	/**
+	 * Test qui crée un enchère avec un prix minimum définit
+	 */
 	@Test
 	public void testCreerEncherePrixMin()
 	{
@@ -44,8 +63,13 @@ public class VendeurTest
 		Enchere e = this.vendeur.creerEncherePrixMin(obj, dateLimite, prixMin);
 
 		Assert.assertEquals(ench, e);
+		Assert.assertTrue(salesHouse.getEnchereCrees().contains(e));
+		Assert.assertFalse(salesHouse.getEncherePubliees().contains(e));
 	}
 
+	/**
+	 * Test qui crée un enchère avec un prix de réserve définit
+	 */
 	@Test
 	public void testCreerEncherePrixReserve()
 	{
@@ -54,8 +78,13 @@ public class VendeurTest
 		Enchere e = this.vendeur.creerEncherePrixReserve(obj, dateLimite, prixReserve);
 
 		Assert.assertEquals(ench, e);
+		Assert.assertTrue(salesHouse.getEnchereCrees().contains(e));
+		Assert.assertFalse(salesHouse.getEncherePubliees().contains(e));
 	}
 
+	/**
+	 * Test qui crée un enchère avec tout les attributs définits
+	 */
 	@Test
 	public void testCreerEnchereComplet()
 	{
@@ -64,27 +93,53 @@ public class VendeurTest
 		Enchere e = this.vendeur.creerEnchere(obj, dateLimite, prixMin, prixReserve);
 
 		Assert.assertEquals(ench, e);
+		Assert.assertTrue(salesHouse.getEnchereCrees().contains(e));
+		Assert.assertFalse(salesHouse.getEncherePubliees().contains(e));
 	}
 
+	/**
+	 * Test de la fonction de publication d'une enchere dans le système
+	 */
 	@Test
 	public void testPublierEnchere()
 	{
-		Enchere ench = new Enchere(obj, dateLimite, prixMin, prixReserve);
+		Enchere ench = this.vendeur.creerEnchere(obj, dateLimite, prixMin, prixReserve);
 
-		this.vendeur.publierEnchere(ench);
+		try
+		{
+			this.vendeur.publierEnchere(ench);
+		} catch (ForbiddenBidUpdate e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		// TODO rajouter un controle sur l'ajout aux liste de publiée
-		// TODO idem pour les autres methodes
 		Assert.assertEquals(ench.getEtat(), Etat.PUBLIEE);
+		Assert.assertFalse(salesHouse.getEnchereCrees().contains(ench));
+		Assert.assertTrue(salesHouse.getEncherePubliees().contains(ench));
 	}
 
+	/**
+	 * Test de la fonction annulation d'une enchere dans le système
+	 */
 	@Test
 	public void testAnnulerEnchere()
 	{
-		Enchere ench = new Enchere(obj, dateLimite, prixMin, prixReserve);
+		Enchere ench = this.vendeur.creerEnchere(obj, dateLimite, prixMin, prixReserve);
 
-		this.vendeur.annulerEnchere(ench);
+		try
+		{
+			vendeur.publierEnchere(ench);
+			this.vendeur.annulerEnchere(ench);
+		} catch (ForbiddenBidUpdate e)
+		{
+			System.err.println(e.getMessage());
+		}
 
 		Assert.assertEquals(ench.getEtat(), Etat.ANNULEE);
+		Assert.assertFalse(salesHouse.getEncherePubliees().contains(ench));
+		Assert.assertTrue(salesHouse.getEnchereAnnulees().contains(ench));
 	}
+	
+//	(expected=Exception.class)
 }

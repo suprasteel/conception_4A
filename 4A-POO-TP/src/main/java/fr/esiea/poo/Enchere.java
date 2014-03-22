@@ -120,4 +120,9 @@ public class Enchere
 		return true;
 	}
 
+	public void setEtat(Etat publiee)
+	{
+		this.etat = publiee;
+	}
+
 }

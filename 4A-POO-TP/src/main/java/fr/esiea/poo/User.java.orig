@@ -59,13 +59,12 @@ public class User implements Acheteur, Vendeur
 	}
 
 	@Override
+<<<<<<< HEAD
 	public void emettreOffre(Enchere ench, Offre offre)
 	{
 		ench.addOffre(offre);
 
-	}
-
-	@Override
+=======
 	public void publierEnchere(Enchere ench) throws ForbiddenBidUpdate
 	{
 		if(!userEnchere.contains(ench))
@@ -77,6 +76,7 @@ public class User implements Acheteur, Vendeur
 			salesHouse.getEnchereCrees().remove(ench);
 			salesHouse.getEncherePubliees().add(ench);
 		}
+>>>>>>> 1de0c33f4fadf46d401173565127e151bf647947
 	}
 
 	@Override
@@ -91,5 +91,12 @@ public class User implements Acheteur, Vendeur
 			salesHouse.getEncherePubliees().remove(ench);
 			salesHouse.getEnchereAnnulees().add(ench);
 		}
+	}
+
+	@Override
+	public void emettreOffre(Offre offre)
+	{
+		// TODO Auto-generated method stub
+
 	}
 }
