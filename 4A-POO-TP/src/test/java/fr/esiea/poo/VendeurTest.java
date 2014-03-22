@@ -48,8 +48,8 @@ public class VendeurTest
 		Enchere e = this.vendeur.creerEnchere(obj, dateLimite);
 
 		Assert.assertEquals(ench, e);
-		Assert.assertTrue(this.salesHouse.getEnchereCrees().contains(e));
-		Assert.assertFalse(this.salesHouse.getEncherePubliees().contains(e));
+		Assert.assertTrue(salesHouse.getEnchereCrees().contains(e));
+		Assert.assertFalse(salesHouse.getEncherePubliees().contains(e));
 	}
 
 	/**
@@ -63,8 +63,8 @@ public class VendeurTest
 		Enchere e = this.vendeur.creerEncherePrixMin(obj, dateLimite, prixMin);
 
 		Assert.assertEquals(ench, e);
-		Assert.assertTrue(this.salesHouse.getEnchereCrees().contains(e));
-		Assert.assertFalse(this.salesHouse.getEncherePubliees().contains(e));
+		Assert.assertTrue(salesHouse.getEnchereCrees().contains(e));
+		Assert.assertFalse(salesHouse.getEncherePubliees().contains(e));
 	}
 
 	/**
@@ -78,8 +78,8 @@ public class VendeurTest
 		Enchere e = this.vendeur.creerEncherePrixReserve(obj, dateLimite, prixReserve);
 
 		Assert.assertEquals(ench, e);
-		Assert.assertTrue(this.salesHouse.getEnchereCrees().contains(e));
-		Assert.assertFalse(this.salesHouse.getEncherePubliees().contains(e));
+		Assert.assertTrue(salesHouse.getEnchereCrees().contains(e));
+		Assert.assertFalse(salesHouse.getEncherePubliees().contains(e));
 	}
 
 	/**
@@ -93,8 +93,8 @@ public class VendeurTest
 		Enchere e = this.vendeur.creerEnchere(obj, dateLimite, prixMin, prixReserve);
 
 		Assert.assertEquals(ench, e);
-		Assert.assertTrue(this.salesHouse.getEnchereCrees().contains(e));
-		Assert.assertFalse(this.salesHouse.getEncherePubliees().contains(e));
+		Assert.assertTrue(salesHouse.getEnchereCrees().contains(e));
+		Assert.assertFalse(salesHouse.getEncherePubliees().contains(e));
 	}
 
 	/**
@@ -115,8 +115,8 @@ public class VendeurTest
 		}
 
 		Assert.assertEquals(ench.getEtat(), Etat.PUBLIEE);
-		Assert.assertFalse(this.salesHouse.getEnchereCrees().contains(ench));
-		Assert.assertTrue(this.salesHouse.getEncherePubliees().contains(ench));
+		Assert.assertFalse(salesHouse.getEnchereCrees().contains(ench));
+		Assert.assertTrue(salesHouse.getEncherePubliees().contains(ench));
 	}
 
 	/**
@@ -133,12 +133,13 @@ public class VendeurTest
 			this.vendeur.annulerEnchere(ench);
 		} catch (ForbiddenBidUpdate e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 
 		Assert.assertEquals(ench.getEtat(), Etat.ANNULEE);
-		Assert.assertFalse(this.salesHouse.getEncherePubliees().contains(ench));
-		Assert.assertTrue(this.salesHouse.getEnchereAnnulees().contains(ench));
+		Assert.assertFalse(salesHouse.getEncherePubliees().contains(ench));
+		Assert.assertTrue(salesHouse.getEnchereAnnulees().contains(ench));
 	}
+	
+//	(expected=Exception.class)
 }
