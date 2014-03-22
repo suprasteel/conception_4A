@@ -1,5 +1,6 @@
 package fr.esiea.poo;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Enchere
@@ -8,6 +9,7 @@ public class Enchere
 	private Date dateLimite;
 	private double prixMin, prixReserve;
 	private Etat etat;
+	private ArrayList<Offre> listOffres = new ArrayList<Offre>(); 
 
 	public Enchere(Produit pdt, Date dateLimite)
 	{
@@ -15,6 +17,16 @@ public class Enchere
 		this.dateLimite = dateLimite;
 		prixMin = prixReserve = 0;
 		etat = Etat.CREE;
+	}
+	
+	public void addOffre(Offre o){
+		listOffres.add(o);
+		
+	}
+	
+	public Offre getLastOffre(){
+		return listOffres.get(listOffres.size()-1);	
+	
 	}
 
 	public Enchere(Produit pdt, Date dateLimite, double prixMin, double prixReserve)

@@ -2,10 +2,13 @@ package fr.esiea.poo;
 
 public class Produit
 {
+	private String id;
+	private String description;	
 
-	public Produit(String id, String description)
+	public Produit(String _id, String _description)
 	{
-		// TODO Auto-generated constructor stub
+		this.id = _id;
+		this.description = _description;
 	}
 
 }

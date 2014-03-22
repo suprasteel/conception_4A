@@ -40,9 +40,9 @@ public class User implements Acheteur, Vendeur
 	}
 
 	@Override
-	public void emettreOffre(Offre offre)
+	public void emettreOffre(Enchere ench, Offre offre)
 	{
-		// TODO Auto-generated method stub
+		ench.addOffre(offre);
 
 	}
 
