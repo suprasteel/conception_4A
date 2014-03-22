@@ -10,7 +10,7 @@ public class AcheteurTest
 	@Before
 	public void setUp()
 	{
-		this.ach = new User();
+		this.ach = new User("testUser", "User","Test");
 	}
 	
 	@Test
