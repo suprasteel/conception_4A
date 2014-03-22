@@ -2,6 +2,8 @@ package fr.esiea.poo;
 
 import java.util.Date;
 
+import fr.esiea.poo.exception.ForbiddenBidUpdate;
+
 public interface Vendeur
 {
 	/**
@@ -45,15 +47,19 @@ public interface Vendeur
 	Enchere creerEnchere(Produit obj, Date dateLimite, double prixMin, double prixReserve);
 
 	/**
-	 * Publie l'ennchere en parametre
+	 * Publie l'enchère en paramètre
+	 * 
 	 * @param ench
+	 * @throws ForbiddenBidUpdate 
 	 */
-	void publierEnchere(Enchere ench);
+	void publierEnchere(Enchere ench) throws ForbiddenBidUpdate;
 
 	/**
 	 * Annule l'enchère passée en paramètre
+	 * 
 	 * @param ench
+	 * @throws ForbiddenBidUpdate 
 	 */
-	void annulerEnchere(Enchere ench);
+	void annulerEnchere(Enchere ench) throws ForbiddenBidUpdate;
 
 }

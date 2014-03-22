@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import fr.esiea.poo.exception.ForbiddenBidUpdate;
+
 public class VendeurTest
 {
 	private Vendeur vendeur;
@@ -32,7 +34,6 @@ public class VendeurTest
 		this.dateLimite = cal.getTime();
 		this.prixMin = 0.99;
 		this.prixReserve = 49.99;
-		// this.salesHouse = SalleEnchere.getInstance();
 	}
 
 	/**
@@ -43,10 +44,8 @@ public class VendeurTest
 	public void testCreerEnchereSimple()
 	{
 		Enchere ench = new Enchere(obj, dateLimite);
-		// int nbExpected = this.salesHouse.getEncherePubliee().size();
 
 		Enchere e = this.vendeur.creerEnchere(obj, dateLimite);
-		// int nbActual = this.salesHouse.getEncherePubliee().size();
 
 		Assert.assertEquals(ench, e);
 		Assert.assertTrue(this.salesHouse.getEnchereCrees().contains(e));
@@ -60,10 +59,8 @@ public class VendeurTest
 	public void testCreerEncherePrixMin()
 	{
 		Enchere ench = new Enchere(obj, dateLimite, prixMin, 0);
-		// int nbExpected = this.salesHouse.getEncherePubliee().size();
 
 		Enchere e = this.vendeur.creerEncherePrixMin(obj, dateLimite, prixMin);
-		// int nbActual = this.salesHouse.getEncherePubliee().size();
 
 		Assert.assertEquals(ench, e);
 		Assert.assertTrue(this.salesHouse.getEnchereCrees().contains(e));
@@ -77,10 +74,8 @@ public class VendeurTest
 	public void testCreerEncherePrixReserve()
 	{
 		Enchere ench = new Enchere(obj, dateLimite, 0, prixReserve);
-		// int nbExpected = this.salesHouse.getEncherePubliee().size();
 
 		Enchere e = this.vendeur.creerEncherePrixReserve(obj, dateLimite, prixReserve);
-		// int nbActual = this.salesHouse.getEncherePubliee().size();
 
 		Assert.assertEquals(ench, e);
 		Assert.assertTrue(this.salesHouse.getEnchereCrees().contains(e));
@@ -94,10 +89,8 @@ public class VendeurTest
 	public void testCreerEnchereComplet()
 	{
 		Enchere ench = new Enchere(obj, dateLimite, prixMin, prixReserve);
-		// int nbExpected = this.salesHouse.getEncherePubliee().size();
 
 		Enchere e = this.vendeur.creerEnchere(obj, dateLimite, prixMin, prixReserve);
-		// int nbActual = this.salesHouse.getEncherePubliee().size();
 
 		Assert.assertEquals(ench, e);
 		Assert.assertTrue(this.salesHouse.getEnchereCrees().contains(e));
@@ -110,12 +103,17 @@ public class VendeurTest
 	@Test
 	public void testPublierEnchere()
 	{
-		Enchere ench = new Enchere(obj, dateLimite, prixMin, prixReserve);
+		Enchere ench = this.vendeur.creerEnchere(obj, dateLimite, prixMin, prixReserve);
 
-		this.vendeur.publierEnchere(ench);
+		try
+		{
+			this.vendeur.publierEnchere(ench);
+		} catch (ForbiddenBidUpdate e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		// TODO rajouter un controle sur l'ajout aux liste de publiée
-		// TODO idem pour les autres methodes
 		Assert.assertEquals(ench.getEtat(), Etat.PUBLIEE);
 		Assert.assertFalse(this.salesHouse.getEnchereCrees().contains(ench));
 		Assert.assertTrue(this.salesHouse.getEncherePubliees().contains(ench));
@@ -127,9 +125,17 @@ public class VendeurTest
 	@Test
 	public void testAnnulerEnchere()
 	{
-		Enchere ench = new Enchere(obj, dateLimite, prixMin, prixReserve);
+		Enchere ench = this.vendeur.creerEnchere(obj, dateLimite, prixMin, prixReserve);
 
-		this.vendeur.annulerEnchere(ench);
+		try
+		{
+			vendeur.publierEnchere(ench);
+			this.vendeur.annulerEnchere(ench);
+		} catch (ForbiddenBidUpdate e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		Assert.assertEquals(ench.getEtat(), Etat.ANNULEE);
 		Assert.assertFalse(this.salesHouse.getEncherePubliees().contains(ench));

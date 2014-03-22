@@ -18,6 +18,7 @@ public class SalleEnchere
 	{
 		this.encherePubliees = new ArrayList<>();
 		this.enchereCrees = new ArrayList<>();
+		this.enchereAnnulees = new ArrayList<>();
 	}
 
 	public static SalleEnchere getInstance()
