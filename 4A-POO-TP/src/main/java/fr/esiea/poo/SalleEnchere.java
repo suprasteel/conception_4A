@@ -45,4 +45,21 @@ public class SalleEnchere
 		return this.enchereAnnulees;
 	}
 
+	public void creerEnchere(Enchere enchere)
+	{
+		instance.enchereCrees.add(enchere);
+	}
+
+	public void publierEnchere(Enchere ench)
+	{
+		instance.enchereCrees.remove(ench);
+		instance.encherePubliees.add(ench);
+	}
+
+	public void annulerEnchere(Enchere ench)
+	{
+		instance.encherePubliees.remove(ench);
+		instance.enchereAnnulees.add(ench);
+	}
+
 }

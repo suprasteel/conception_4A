@@ -23,8 +23,8 @@ public class User implements Acheteur, Vendeur
 	{
 		Enchere enchere = new Enchere(obj, dateLimite);
 		userEnchere.add(enchere);
-		salesHouse.getEnchereCrees().add(enchere);
-		
+		salesHouse.creerEnchere(enchere);
+
 		return enchere;
 	}
 
@@ -33,7 +33,7 @@ public class User implements Acheteur, Vendeur
 	{
 		Enchere enchere = new Enchere(obj, dateLimite, prixMin, 0);
 		userEnchere.add(enchere);
-		salesHouse.getEnchereCrees().add(enchere);
+		salesHouse.creerEnchere(enchere);
 
 		return enchere;
 	}
@@ -43,7 +43,7 @@ public class User implements Acheteur, Vendeur
 	{
 		Enchere enchere = new Enchere(obj, dateLimite, 0, prixReserve);
 		userEnchere.add(enchere);
-		salesHouse.getEnchereCrees().add(enchere);
+		salesHouse.creerEnchere(enchere);
 
 		return enchere;
 	}
@@ -53,7 +53,7 @@ public class User implements Acheteur, Vendeur
 	{
 		Enchere enchere = new Enchere(obj, dateLimite, prixMin, prixReserve);
 		userEnchere.add(enchere);
-		salesHouse.getEnchereCrees().add(enchere);
+		salesHouse.creerEnchere(enchere);
 
 		return enchere;
 	}
@@ -67,28 +67,26 @@ public class User implements Acheteur, Vendeur
 	@Override
 	public void publierEnchere(Enchere ench) throws ForbiddenBidUpdate
 	{
-		if(!userEnchere.contains(ench))
+		if (!userEnchere.contains(ench))
 		{
 			throw new ForbiddenBidUpdate();
-		}else
+		} else
 		{
 			ench.setEtat(Etat.PUBLIEE);
-			salesHouse.getEnchereCrees().remove(ench);
-			salesHouse.getEncherePubliees().add(ench);
+			salesHouse.publierEnchere(ench);
 		}
 	}
 
 	@Override
 	public void annulerEnchere(Enchere ench) throws ForbiddenBidUpdate
 	{
-		if(!userEnchere.contains(ench))
+		if (!userEnchere.contains(ench))
 		{
 			throw new ForbiddenBidUpdate();
-		}else
+		} else
 		{
 			ench.setEtat(Etat.ANNULEE);
-			salesHouse.getEncherePubliees().remove(ench);
-			salesHouse.getEnchereAnnulees().add(ench);
+			salesHouse.annulerEnchere(ench);
 		}
 	}
 }
