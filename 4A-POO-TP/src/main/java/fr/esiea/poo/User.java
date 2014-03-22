@@ -6,14 +6,6 @@ import java.util.Date;
 public class User implements Acheteur, Vendeur
 {
 	ArrayList<Enchere> userEnchere = new ArrayList<Enchere>();
-	private String login, nom, prenom;
-
-	public User(String login, String nom, String prenom)
-	{
-		this.login = login;
-		this.nom = nom;
-		this.prenom = prenom;
-	}
 
 	@Override
 	public Enchere creerEnchere(Produit obj, Date dateLimite)
@@ -48,6 +40,13 @@ public class User implements Acheteur, Vendeur
 	}
 
 	@Override
+	public void emettreOffre(Offre offre)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
 	public void publierEnchere(Enchere ench)
 	{
 		// TODO Auto-generated method stub
@@ -61,10 +60,4 @@ public class User implements Acheteur, Vendeur
 
 	}
 
-	@Override
-	public void emettreOffre(Offre offre)
-	{
-		// TODO Auto-generated method stub
-
-	}
 }
