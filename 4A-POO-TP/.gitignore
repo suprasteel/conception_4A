@@ -1,5 +1,10 @@
 /target
+<<<<<<< HEAD
 /.settings
 /.classpath
 /.project
 /bin
+=======
+/bin
+.gitignore
+>>>>>>> branch 'master' of https://github.com/suprasteel/conception_4A.git
