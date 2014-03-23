@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import fr.esiea.poo.exception.ForbiddenBidCancellation;
 import fr.esiea.poo.exception.ForbiddenBidUpdate;
-import fr.esiea.poo.exception.InsuffisantOfferPrice;
 
 public class VendeurTest
 {
@@ -110,7 +109,7 @@ public class VendeurTest
 		try
 		{
 			this.vendeur.publierEnchere(ench);
-		} catch (ForbiddenBidUpdate e)
+		} catch (ForbiddenBidOperation e)
 		{
 			System.err.println(e.getMessage());
 		}
@@ -132,7 +131,7 @@ public class VendeurTest
 		{
 			vendeur.publierEnchere(ench);
 			vendeur.annulerEnchere(ench);
-		} catch (ForbiddenBidUpdate | ForbiddenBidCancellation e)
+		} catch (ForbiddenBidOperation e)
 		{
 			System.err.println(e.getMessage());
 		}
@@ -148,24 +147,13 @@ public class VendeurTest
 	 * 
 	 * @throws ForbiddenBidCancellation
 	 */
-	@Test(expected = ForbiddenBidCancellation.class)
-	public void testAnnulerEnchereKO() throws ForbiddenBidCancellation
+	@Test(expected = ForbiddenBidOperation.class)
+	public void testAnnulerEnchereKO() throws ForbiddenBidOperation
 	{
 		Enchere ench = vendeur.creerEnchere(obj, dateLimite, prixMin, prixReserve);
 
-		try
-		{
-			vendeur.publierEnchere(ench);
-			try {
-				ench.addOffre(new Offre(null, 50));
-			} catch (InsuffisantOfferPrice e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			vendeur.annulerEnchere(ench);
-		} catch (ForbiddenBidUpdate e)
-		{
-			System.err.println(e.getMessage());
-		}
+		vendeur.publierEnchere(ench);
+		ench.addOffre(new Offre(null, 50));
+		vendeur.annulerEnchere(ench);
 	}
 }

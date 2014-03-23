@@ -12,7 +12,7 @@ public class Enchere extends ObjetAObserver
 	private Produit produit;
 	private Date dateLimite;
 	private double prixMin, prixReserve;
-	//CREE, PUBLIEE, ANNULEE, TERMINEE
+	// CREE, PUBLIEE, ANNULEE, TERMINEE
 	private Etat etat;
 	private ArrayList<Offre> listOffres = new ArrayList<Offre>();
 
@@ -164,6 +164,22 @@ public class Enchere extends ObjetAObserver
 	public boolean hasOffers()
 	{
 		return !listOffres.isEmpty();
+	}
+
+	public boolean isPrixReserveAtteint()
+	{
+		if (getLastOffre().getPrix() > prixReserve)
+		{
+			return true;
+		} else
+		{
+			return false;
+		}
+	}
+
+	public double getPrixMin()
+	{
+		return prixMin;
 	}
 
 }
