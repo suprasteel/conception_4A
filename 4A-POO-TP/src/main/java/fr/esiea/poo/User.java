@@ -3,68 +3,106 @@ package fr.esiea.poo;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class User implements Acheteur, Vendeur, ObservateurEncheres {
-	ArrayList<Enchere> userEnchere = new ArrayList<Enchere>();
-	private String login, nom, prenom;
+import fr.esiea.poo.exception.ForbiddenBidCancellation;
+import fr.esiea.poo.exception.ForbiddenBidUpdate;
 
-	public User(String login, String nom, String prenom) {
+public class User implements Acheteur, Vendeur, ObservateurEncheres
+{
+	private ArrayList<Enchere> userEnchere = new ArrayList<Enchere>();
+	private ArrayList<Offre> userOffres = new ArrayList<>();
+	private String login, nom, prenom;
+	private SalleEnchere salesHouse = SalleEnchere.getInstance();
+
+	public User(String login, String nom, String prenom)
+	{
 		this.login = login;
 		this.nom = nom;
 		this.prenom = prenom;
 	}
 
 	@Override
-	public Enchere creerEnchere(Produit obj, Date dateLimite) {
+	public Enchere creerEnchere(Produit obj, Date dateLimite)
+	{
 		Enchere enchere = new Enchere(obj, dateLimite);
 		userEnchere.add(enchere);
+		salesHouse.creerEnchere(enchere);
+
 		return enchere;
 	}
 
 	@Override
-	public Enchere creerEncherePrixMin(Produit obj, Date dateLimite,
-			double prixMin) {
+	public Enchere creerEncherePrixMin(Produit obj, Date dateLimite, double prixMin)
+	{
 		Enchere enchere = new Enchere(obj, dateLimite, prixMin, 0);
 		userEnchere.add(enchere);
+		salesHouse.creerEnchere(enchere);
+
 		return enchere;
 	}
 
 	@Override
-	public Enchere creerEncherePrixReserve(Produit obj, Date dateLimite,
-			double prixReserve) {
+	public Enchere creerEncherePrixReserve(Produit obj, Date dateLimite, double prixReserve)
+	{
 		Enchere enchere = new Enchere(obj, dateLimite, 0, prixReserve);
 		userEnchere.add(enchere);
+		salesHouse.creerEnchere(enchere);
+
 		return enchere;
 	}
 
 	@Override
-	public Enchere creerEnchere(Produit obj, Date dateLimite, double prixMin,
-			double prixReserve) {
+	public Enchere creerEnchere(Produit obj, Date dateLimite, double prixMin, double prixReserve)
+	{
 		Enchere enchere = new Enchere(obj, dateLimite, prixMin, prixReserve);
 		userEnchere.add(enchere);
+		salesHouse.creerEnchere(enchere);
+
 		return enchere;
 	}
 
 	@Override
-	public void publierEnchere(Enchere ench) {
-		// TODO Auto-generated method stub
+	public Offre emettreOffre(Enchere ench, double prix)
+	{
+		Offre offre = new Offre(this, prix);
+		userOffres.add(offre);
+		ench.addOffre(offre);
 
+		return offre;
 	}
 
 	@Override
-	public void annulerEnchere(Enchere ench) {
-		// TODO Auto-generated method stub
-
+	public void publierEnchere(Enchere ench) throws ForbiddenBidUpdate
+	{
+		if (!userEnchere.contains(ench))
+		{
+			throw new ForbiddenBidUpdate();
+		} else
+		{
+			ench.setEtat(Etat.PUBLIEE);
+			salesHouse.publierEnchere(ench);
+		}
 	}
 
 	@Override
-	public void receptAlerte(Alerte a) {
-		// TODO Auto-generated method stub
+	public void annulerEnchere(Enchere ench) throws ForbiddenBidUpdate, ForbiddenBidCancellation
+	{
+		if (!userEnchere.contains(ench))
+		{
+			throw new ForbiddenBidUpdate();
+		}
+		if (ench.hasOffers())
+		{
+			throw new ForbiddenBidCancellation();
+		}
+		ench.setEtat(Etat.ANNULEE);
 
+		salesHouse.annulerEnchere(ench);
 	}
 
 	@Override
-	public Offre emettreOffre(Enchere ench, double prix) {
+	public void receptAlerte(Alerte a)
+	{
 		// TODO Auto-generated method stub
-		return null;
+
 	}
 }
