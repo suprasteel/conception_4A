@@ -2,6 +2,7 @@ package fr.esiea.poo;
 
 import java.util.Date;
 
+import fr.esiea.poo.exception.ForbiddenBidCancellation;
 import fr.esiea.poo.exception.ForbiddenBidUpdate;
 
 public interface Vendeur
@@ -59,7 +60,8 @@ public interface Vendeur
 	 * 
 	 * @param ench
 	 * @throws ForbiddenBidUpdate 
+	 * @throws ForbiddenBidCancellation 
 	 */
-	void annulerEnchere(Enchere ench) throws ForbiddenBidUpdate;
+	void annulerEnchere(Enchere ench) throws ForbiddenBidUpdate, ForbiddenBidCancellation;
 
 }

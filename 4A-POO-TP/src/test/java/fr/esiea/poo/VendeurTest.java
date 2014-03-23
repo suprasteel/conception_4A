@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import fr.esiea.poo.exception.ForbiddenBidCancellation;
 import fr.esiea.poo.exception.ForbiddenBidUpdate;
 
 public class VendeurTest
@@ -122,7 +123,7 @@ public class VendeurTest
 	 * Test de la fonction annulation d'une enchere dans le système
 	 */
 	@Test
-	public void testAnnulerEnchere()
+	public void testAnnulerEnchereOK()
 	{
 		Enchere ench = vendeur.creerEnchere(obj, dateLimite, prixMin, prixReserve);
 
@@ -130,7 +131,7 @@ public class VendeurTest
 		{
 			vendeur.publierEnchere(ench);
 			vendeur.annulerEnchere(ench);
-		} catch (ForbiddenBidUpdate e)
+		} catch (ForbiddenBidUpdate | ForbiddenBidCancellation e)
 		{
 			System.err.println(e.getMessage());
 		}
@@ -139,6 +140,31 @@ public class VendeurTest
 		Assert.assertFalse(salesHouse.getEncherePubliees().contains(ench));
 		Assert.assertTrue(salesHouse.getEnchereAnnulees().contains(ench));
 	}
-	
-//	(expected=Exception.class)
+
+	/**
+	 * Test de la fonction annulation d'une enchere dans le système sur une
+	 * enchere possedant deja des offres
+	 * @throws ForbiddenBidCancellation 
+	 */
+	@Test(expected = ForbiddenBidCancellation.class)
+	public void testAnnulerEnchereKO() throws ForbiddenBidCancellation
+	{
+		Enchere ench = vendeur.creerEnchere(obj, dateLimite, prixMin, prixReserve);
+
+		try
+		{
+			vendeur.publierEnchere(ench);
+			ench.addOffre(new Offre(50));
+			vendeur.annulerEnchere(ench);
+		} catch (ForbiddenBidUpdate  e)
+		{
+			System.err.println(e.getMessage());
+		}
+
+//		Assert.assertEquals(ench.getEtat(), Etat.ANNULEE);
+//		Assert.assertFalse(salesHouse.getEncherePubliees().contains(ench));
+//		Assert.assertTrue(salesHouse.getEnchereAnnulees().contains(ench));
+	}
+
+	// (expected=Exception.class)
 }

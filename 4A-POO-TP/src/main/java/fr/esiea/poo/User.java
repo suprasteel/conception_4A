@@ -3,6 +3,7 @@ package fr.esiea.poo;
 import java.util.ArrayList;
 import java.util.Date;
 
+import fr.esiea.poo.exception.ForbiddenBidCancellation;
 import fr.esiea.poo.exception.ForbiddenBidUpdate;
 
 public class User implements Acheteur, Vendeur
@@ -79,15 +80,18 @@ public class User implements Acheteur, Vendeur
 	}
 
 	@Override
-	public void annulerEnchere(Enchere ench) throws ForbiddenBidUpdate
+	public void annulerEnchere(Enchere ench) throws ForbiddenBidUpdate, ForbiddenBidCancellation
 	{
 		if (!userEnchere.contains(ench))
 		{
 			throw new ForbiddenBidUpdate();
-		} else
-		{
-			ench.setEtat(Etat.ANNULEE);
-			salesHouse.annulerEnchere(ench);
 		}
+		if (ench.hasOffers())
+		{
+			throw new ForbiddenBidCancellation();
+		}
+		ench.setEtat(Etat.ANNULEE);
+
+		salesHouse.annulerEnchere(ench);
 	}
 }

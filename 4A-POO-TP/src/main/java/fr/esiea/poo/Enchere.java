@@ -125,4 +125,9 @@ public class Enchere
 		this.etat = publiee;
 	}
 
+	public boolean hasOffers()
+	{
+		return !listOffres.isEmpty();
+	}
+
 }
