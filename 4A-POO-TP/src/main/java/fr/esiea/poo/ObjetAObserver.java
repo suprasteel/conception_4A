@@ -7,7 +7,7 @@ import java.util.HashSet;
 	 */
 	public class ObjetAObserver {
 		
-	    private HashSet<ObservateurEncheres> listeObservateurs = 
+	    private HashSet<ObservateurEncheres> setObservateurs = 
 	            new HashSet<ObservateurEncheres>();
 	    
 	    /**
@@ -15,7 +15,7 @@ import java.util.HashSet;
 	     * @param pObservateur
 	     */
 	    public void ajouterObs(ObservateurEncheres pObservateur) {
-	        listeObservateurs.add(pObservateur);
+	        setObservateurs.add(pObservateur);
 	    }
 	    
 	    /**
@@ -23,15 +23,15 @@ import java.util.HashSet;
 	     * @param pObservateur
 	     */
 	    public void supprimerObs(ObservateurEncheres pObservateur) {
-	        listeObservateurs.remove(pObservateur);
+	        setObservateurs.remove(pObservateur);
 	    }
 	    
 	    /**
-	     * On met chaque utilisateur à jour
+	     * On met chaque utilisateur à jour, il suffit d'appeler notifier() sur l'observé.
 	     */
-	    protected void notifier() {
-	        for(ObservateurEncheres lObservateur : listeObservateurs) {
-	            lObservateur.receptNvlEnchere();
+	    protected void notifier(Enchere e) {
+	        for(ObservateurEncheres lObservateur : setObservateurs) {
+	            lObservateur.receptNvlEnchere(e);
 	        }
 	    }
 	}

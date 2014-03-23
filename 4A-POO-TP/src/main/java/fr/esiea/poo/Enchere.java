@@ -2,7 +2,10 @@ package fr.esiea.poo;
 
 import java.util.Date;
 
-public class Enchere
+import fr.esiea.poo.ObjetAObserver;
+import fr.esiea.poo.ObservateurEncheres;
+
+public class Enchere extends ObjetAObserver
 {
 	private Produit produit;
 	private Date dateLimite;
@@ -11,6 +14,7 @@ public class Enchere
 
 	public Enchere(Produit pdt, Date dateLimite)
 	{
+		super();
 		this.produit = pdt;
 		this.dateLimite = dateLimite;
 		prixMin = prixReserve = 0;
@@ -19,6 +23,7 @@ public class Enchere
 
 	public Enchere(Produit pdt, Date dateLimite, double prixMin, double prixReserve)
 	{
+		super();
 		this.produit = pdt;
 		this.dateLimite = dateLimite;
 		this.prixMin = prixMin;
