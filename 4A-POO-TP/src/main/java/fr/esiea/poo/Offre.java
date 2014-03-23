@@ -2,20 +2,23 @@ package fr.esiea.poo;
 
 public class Offre
 {
-	
-	private double prix = 0;
-	private int id  = 0;
+
 	private static int numOffre = 0;
 
-	public Offre(double _prix)
+	private double prix = 0;
+	private int id = 0;
+	private Acheteur ach;
+
+	public Offre(Acheteur ach, double _prix)
 	{
 		numOffre++;
 		id = numOffre;
 		prix = _prix;
-		// TODO Auto-generated constructor stub
+		this.ach = ach;
 	}
-	
-	public double getPrix(){
+
+	public double getPrix()
+	{
 		return this.prix;
 	}
 

@@ -14,6 +14,8 @@ public class AcheteurTest
 	private Produit obj;
 	private double prixMin;
 	private Date dateLimite;
+	
+	//TODO ajouter controle sur ajout d'offre pas encore publiées
 
 	@Before
 	public void setUp()
@@ -25,12 +27,16 @@ public class AcheteurTest
 		this.dateLimite = cal.getTime();
 	}
 
+	//Un utilisateur dans son rôle d'Acheteur peut émettre des offres pour une enchère publiée
+//	par un autre utilisateur que lui.
+	
 	@Test
 	public void testEmettreOffre()
 	{
 		Enchere ench = new Enchere(new Produit("idp", "desc"), dateLimite);
-		Offre o = new Offre(10.95);
-		this.ach.emettreOffre(ench, o);
+		double prix = 10.95;
+		
+		Offre o = this.ach.emettreOffre(ench, prix);
 
 		Assert.assertEquals(ench.getLastOffre(), o);
 	}
@@ -39,8 +45,8 @@ public class AcheteurTest
 	public void testEmettreOffre2()
 	{
 		Enchere ench = new Enchere(new Produit("idp", "desc"), dateLimite, 11.0, 15.5);
-		Offre o = new Offre(10.95);
-		this.ach.emettreOffre(ench, o);
+		
+		Offre o = this.ach.emettreOffre(ench, 15.0);
 
 		Assert.assertEquals(ench.getLastOffre().getPrix(), o.getPrix(), 0);
 	}

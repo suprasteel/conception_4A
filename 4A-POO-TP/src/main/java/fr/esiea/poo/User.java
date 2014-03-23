@@ -8,7 +8,8 @@ import fr.esiea.poo.exception.ForbiddenBidUpdate;
 
 public class User implements Acheteur, Vendeur
 {
-	ArrayList<Enchere> userEnchere = new ArrayList<Enchere>();
+	private ArrayList<Enchere> userEnchere = new ArrayList<Enchere>();
+	private ArrayList<Offre> userOffres = new ArrayList<>();
 	private String login, nom, prenom;
 	private SalleEnchere salesHouse = SalleEnchere.getInstance();
 
@@ -60,9 +61,13 @@ public class User implements Acheteur, Vendeur
 	}
 
 	@Override
-	public void emettreOffre(Enchere ench, Offre offre)
+	public Offre emettreOffre(Enchere ench, double prix)
 	{
+		Offre offre = new Offre(this, prix);
+		userOffres.add(offre);
 		ench.addOffre(offre);
+		
+		return offre;
 	}
 
 	@Override

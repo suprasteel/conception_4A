@@ -155,7 +155,7 @@ public class VendeurTest
 		try
 		{
 			vendeur.publierEnchere(ench);
-			ench.addOffre(new Offre(50));
+			ench.addOffre(new Offre(null, 50));
 			vendeur.annulerEnchere(ench);
 		} catch (ForbiddenBidUpdate e)
 		{
