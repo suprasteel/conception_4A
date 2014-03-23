@@ -11,17 +11,14 @@ public class AcheteurTest
 {
 	private Acheteur ach;
 	private Enchere ench;
-
 	private Produit obj;
-	
 	private double prixMin;
 	private Date dateLimite;
-	
 
 	@Before
 	public void setUp()
 	{
-		this.ach = new User();
+		this.ach = new User("a", "b", "c");
 		this.prixMin = 0.99;
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, 30);
@@ -39,5 +36,16 @@ public class AcheteurTest
 		this.ach.emettreOffre(ench ,o);
 		
 		Assert.assertEquals(ench.getLastOffre(), o);
+	}
+	
+	@Test
+	public void testEmettreOffre2()
+	
+	{
+		Enchere ench = new Enchere(new Produit("idp", "desc"), dateLimite,11.0,15.5);
+		Offre o = new Offre(10.95);
+		this.ach.emettreOffre(ench ,o);
+		
+		Assert.assertFalse((ench.getLastOffre().getPrix()==(o.getPrix())));
 	}
 }

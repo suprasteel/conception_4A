@@ -15,6 +15,8 @@ public class Offre
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+	public double getPrix(){
+		return this.prix;
+	}
 
 }

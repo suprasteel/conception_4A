@@ -18,15 +18,26 @@ public class Enchere
 		prixMin = prixReserve = 0;
 		etat = Etat.CREE;
 	}
-	
-	public void addOffre(Offre o){
-		listOffres.add(o);
-		
+
+	public boolean addOffre(Offre o) {
+		boolean succes = false;
+		if (listOffres.isEmpty()) {
+			if (o.getPrix() > prixMin) {
+				listOffres.add(o);
+				succes = true;
+			}
+		} else if (getLastOffre().getPrix() < o.getPrix()) {
+			listOffres.add(o);
+			succes = true;
+		}
+		return succes;
 	}
-	
-	public Offre getLastOffre(){
-		return listOffres.get(listOffres.size()-1);	
-	
+
+	public Offre getLastOffre() {
+		if (listOffres.isEmpty()) {
+		return listOffres.get(listOffres.size() - 1);
+		}
+	return null;
 	}
 
 	public Enchere(Produit pdt, Date dateLimite, double prixMin, double prixReserve)
