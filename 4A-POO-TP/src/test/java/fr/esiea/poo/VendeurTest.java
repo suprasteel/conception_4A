@@ -144,7 +144,8 @@ public class VendeurTest
 	/**
 	 * Test de la fonction annulation d'une enchere dans le système sur une
 	 * enchere possedant deja des offres
-	 * @throws ForbiddenBidCancellation 
+	 * 
+	 * @throws ForbiddenBidCancellation
 	 */
 	@Test(expected = ForbiddenBidCancellation.class)
 	public void testAnnulerEnchereKO() throws ForbiddenBidCancellation
@@ -156,15 +157,9 @@ public class VendeurTest
 			vendeur.publierEnchere(ench);
 			ench.addOffre(new Offre(50));
 			vendeur.annulerEnchere(ench);
-		} catch (ForbiddenBidUpdate  e)
+		} catch (ForbiddenBidUpdate e)
 		{
 			System.err.println(e.getMessage());
 		}
-
-//		Assert.assertEquals(ench.getEtat(), Etat.ANNULEE);
-//		Assert.assertFalse(salesHouse.getEncherePubliees().contains(ench));
-//		Assert.assertTrue(salesHouse.getEnchereAnnulees().contains(ench));
 	}
-
-	// (expected=Exception.class)
 }

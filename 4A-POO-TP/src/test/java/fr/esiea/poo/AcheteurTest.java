@@ -23,29 +23,25 @@ public class AcheteurTest
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, 30);
 		this.dateLimite = cal.getTime();
-		//this.offre = new Offre();
-		
 	}
-	
+
 	@Test
 	public void testEmettreOffre()
-	
 	{
 		Enchere ench = new Enchere(new Produit("idp", "desc"), dateLimite);
 		Offre o = new Offre(10.95);
-		this.ach.emettreOffre(ench ,o);
-		
+		this.ach.emettreOffre(ench, o);
+
 		Assert.assertEquals(ench.getLastOffre(), o);
 	}
-	
+
 	@Test
 	public void testEmettreOffre2()
-	
 	{
-		Enchere ench = new Enchere(new Produit("idp", "desc"), dateLimite,11.0,15.5);
+		Enchere ench = new Enchere(new Produit("idp", "desc"), dateLimite, 11.0, 15.5);
 		Offre o = new Offre(10.95);
-		this.ach.emettreOffre(ench ,o);
-		
-		Assert.assertFalse((ench.getLastOffre().getPrix()==(o.getPrix())));
+		this.ach.emettreOffre(ench, o);
+
+		Assert.assertEquals(ench.getLastOffre().getPrix(), o.getPrix(), 0);
 	}
 }
