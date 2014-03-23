@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import fr.esiea.poo.exception.ForbiddenBidCancellation;
 import fr.esiea.poo.exception.ForbiddenBidUpdate;
+import fr.esiea.poo.exception.InsuffisantOfferPrice;
 
 public class VendeurTest
 {
@@ -155,7 +156,12 @@ public class VendeurTest
 		try
 		{
 			vendeur.publierEnchere(ench);
-			ench.addOffre(new Offre(null, 50));
+			try {
+				ench.addOffre(new Offre(null, 50));
+			} catch (InsuffisantOfferPrice e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			vendeur.annulerEnchere(ench);
 		} catch (ForbiddenBidUpdate e)
 		{

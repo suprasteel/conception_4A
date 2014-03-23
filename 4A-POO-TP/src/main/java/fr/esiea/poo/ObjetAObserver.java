@@ -116,7 +116,7 @@ public class ObjetAObserver {
 	}
 
 	/**
-	 * On met chaque utilisateur à jour, il suffit d'appeler notifier() sur
+	 * On met chaque utilisateur à jour, il suffit d'appeler notifier(_alerte) sur
 	 * l'observé.
 	 */
 	protected void notifier(Alerte a) {

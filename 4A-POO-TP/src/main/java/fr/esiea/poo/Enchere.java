@@ -5,6 +5,7 @@ import java.util.Date;
 
 import fr.esiea.poo.ObjetAObserver;
 import fr.esiea.poo.ObservateurEncheres;
+import fr.esiea.poo.exception.InsuffisantOfferPrice;
 
 public class Enchere extends ObjetAObserver
 {
@@ -23,7 +24,7 @@ public class Enchere extends ObjetAObserver
 		etat = Etat.CREE;
 	}
 
-	public boolean addOffre(Offre o)
+	public boolean addOffre(Offre o) throws InsuffisantOfferPrice
 	{
 		boolean succes = false;
 		if (listOffres.isEmpty())
@@ -33,11 +34,18 @@ public class Enchere extends ObjetAObserver
 				listOffres.add(o);
 				succes = true;
 			}
+			else {
+				throw new InsuffisantOfferPrice(InsuffisantOfferPrice.INF_PRIX_MIN);
+			}
 		} else if (getLastOffre().getPrix() < o.getPrix())
 		{
 			listOffres.add(o);
 			succes = true;
 		}
+		else {
+			throw new InsuffisantOfferPrice(InsuffisantOfferPrice.INF_OFFRE_PRECEDENTE);
+		}
+		notifier(new Alerte(Alerte.TypeAlerte.SURENCHERE, this));
 		return succes;
 	}
 
