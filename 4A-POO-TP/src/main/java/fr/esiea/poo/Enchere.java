@@ -11,12 +11,12 @@ public class Enchere extends ObjetAObserver
 	private Produit produit;
 	private Date dateLimite;
 	private double prixMin, prixReserve;
+	//CREE, PUBLIEE, ANNULEE, TERMINEE
 	private Etat etat;
 	private ArrayList<Offre> listOffres = new ArrayList<Offre>();
 
 	public Enchere(Produit pdt, Date dateLimite)
 	{
-		super();
 		this.produit = pdt;
 		this.dateLimite = dateLimite;
 		prixMin = prixReserve = 0;

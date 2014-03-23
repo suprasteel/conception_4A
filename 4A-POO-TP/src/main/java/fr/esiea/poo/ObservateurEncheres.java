@@ -8,6 +8,6 @@ public interface ObservateurEncheres {
 	/**
 	 * Méthode de notification d'une nouvelleEnchère, appelée par l'objet observé
 	 */
-	public void receptNvlEnchere(Enchere e);
+	public void receptAlerte(Alerte a);
 
 }
