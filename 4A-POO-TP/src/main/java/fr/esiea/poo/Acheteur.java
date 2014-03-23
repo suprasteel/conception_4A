@@ -3,6 +3,6 @@ package fr.esiea.poo;
 public interface Acheteur
 {
 
-	void emettreOffre(Offre offre);
+	Offre emettreOffre(Enchere ench, double prix);
 
 }

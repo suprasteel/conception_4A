@@ -1,5 +1,6 @@
 package fr.esiea.poo;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import fr.esiea.poo.ObjetAObserver;
@@ -11,6 +12,7 @@ public class Enchere extends ObjetAObserver
 	private Date dateLimite;
 	private double prixMin, prixReserve;
 	private Etat etat;
+	private ArrayList<Offre> listOffres = new ArrayList<Offre>();
 
 	public Enchere(Produit pdt, Date dateLimite)
 	{
@@ -19,6 +21,39 @@ public class Enchere extends ObjetAObserver
 		this.dateLimite = dateLimite;
 		prixMin = prixReserve = 0;
 		etat = Etat.CREE;
+	}
+
+	public boolean addOffre(Offre o)
+	{
+		boolean succes = false;
+		if (listOffres.isEmpty())
+		{
+			if (o.getPrix() > prixMin)
+			{
+				listOffres.add(o);
+				succes = true;
+			}
+		} else if (getLastOffre().getPrix() < o.getPrix())
+		{
+			listOffres.add(o);
+			succes = true;
+		}
+		return succes;
+	}
+
+	/**
+	 * Retourne la derniere offre emise sur cette enchere
+	 * 
+	 * @return last offer
+	 */
+	public Offre getLastOffre()
+	{
+		if (listOffres.isEmpty())
+		{
+			return null;
+		}
+
+		return listOffres.get(listOffres.size() - 1);
 	}
 
 	public Enchere(Produit pdt, Date dateLimite, double prixMin, double prixReserve)
@@ -111,6 +146,16 @@ public class Enchere extends ObjetAObserver
 			return false;
 		}
 		return true;
+	}
+
+	public void setEtat(Etat publiee)
+	{
+		this.etat = publiee;
+	}
+
+	public boolean hasOffers()
+	{
+		return !listOffres.isEmpty();
 	}
 
 }

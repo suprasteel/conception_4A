@@ -3,10 +3,15 @@ package fr.esiea.poo;
 import java.util.ArrayList;
 import java.util.Date;
 
+import fr.esiea.poo.exception.ForbiddenBidCancellation;
+import fr.esiea.poo.exception.ForbiddenBidUpdate;
+
 public class User implements Acheteur, Vendeur
 {
-	ArrayList<Enchere> userEnchere = new ArrayList<Enchere>();
+	private ArrayList<Enchere> userEnchere = new ArrayList<Enchere>();
+	private ArrayList<Offre> userOffres = new ArrayList<>();
 	private String login, nom, prenom;
+	private SalleEnchere salesHouse = SalleEnchere.getInstance();
 
 	public User(String login, String nom, String prenom)
 	{
@@ -20,6 +25,8 @@ public class User implements Acheteur, Vendeur
 	{
 		Enchere enchere = new Enchere(obj, dateLimite);
 		userEnchere.add(enchere);
+		salesHouse.creerEnchere(enchere);
+
 		return enchere;
 	}
 
@@ -28,6 +35,8 @@ public class User implements Acheteur, Vendeur
 	{
 		Enchere enchere = new Enchere(obj, dateLimite, prixMin, 0);
 		userEnchere.add(enchere);
+		salesHouse.creerEnchere(enchere);
+
 		return enchere;
 	}
 
@@ -36,6 +45,8 @@ public class User implements Acheteur, Vendeur
 	{
 		Enchere enchere = new Enchere(obj, dateLimite, 0, prixReserve);
 		userEnchere.add(enchere);
+		salesHouse.creerEnchere(enchere);
+
 		return enchere;
 	}
 
@@ -44,27 +55,47 @@ public class User implements Acheteur, Vendeur
 	{
 		Enchere enchere = new Enchere(obj, dateLimite, prixMin, prixReserve);
 		userEnchere.add(enchere);
+		salesHouse.creerEnchere(enchere);
+
 		return enchere;
 	}
 
 	@Override
-	public void publierEnchere(Enchere ench)
+	public Offre emettreOffre(Enchere ench, double prix)
 	{
-		// TODO Auto-generated method stub
-
+		Offre offre = new Offre(this, prix);
+		userOffres.add(offre);
+		ench.addOffre(offre);
+		
+		return offre;
 	}
 
 	@Override
-	public void annulerEnchere(Enchere ench)
+	public void publierEnchere(Enchere ench) throws ForbiddenBidUpdate
 	{
-		// TODO Auto-generated method stub
-
+		if (!userEnchere.contains(ench))
+		{
+			throw new ForbiddenBidUpdate();
+		} else
+		{
+			ench.setEtat(Etat.PUBLIEE);
+			salesHouse.publierEnchere(ench);
+		}
 	}
 
 	@Override
-	public void emettreOffre(Offre offre)
+	public void annulerEnchere(Enchere ench) throws ForbiddenBidUpdate, ForbiddenBidCancellation
 	{
-		// TODO Auto-generated method stub
+		if (!userEnchere.contains(ench))
+		{
+			throw new ForbiddenBidUpdate();
+		}
+		if (ench.hasOffers())
+		{
+			throw new ForbiddenBidCancellation();
+		}
+		ench.setEtat(Etat.ANNULEE);
 
+		salesHouse.annulerEnchere(ench);
 	}
 }
