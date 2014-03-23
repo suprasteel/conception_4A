@@ -3,8 +3,7 @@ package fr.esiea.poo;
 import java.util.ArrayList;
 import java.util.Date;
 
-import fr.esiea.poo.exception.ForbiddenBidCancellation;
-import fr.esiea.poo.exception.ForbiddenBidUpdate;
+import fr.esiea.poo.exception.ForbiddenBidOperation;
 
 public class User implements Acheteur, Vendeur, ObservateurEncheres
 {
@@ -61,8 +60,16 @@ public class User implements Acheteur, Vendeur, ObservateurEncheres
 	}
 
 	@Override
-	public Offre emettreOffre(Enchere ench, double prix)
+	public Offre emettreOffre(Enchere ench, double prix) throws ForbiddenBidOperation
 	{
+		if (this.userEnchere.contains(ench))
+		{
+			throw new ForbiddenBidOperation("Vous ne pouvez pas enchérir sur une enchere qui vous appartient!");
+		}
+		if (prix < ench.getPrixMin())
+		{
+			throw new ForbiddenBidOperation("Le prix de l'offre est inférieur au prix minimum de l'enchère!");
+		}
 		Offre offre = new Offre(this, prix);
 		userOffres.add(offre);
 		ench.addOffre(offre);
@@ -71,11 +78,11 @@ public class User implements Acheteur, Vendeur, ObservateurEncheres
 	}
 
 	@Override
-	public void publierEnchere(Enchere ench) throws ForbiddenBidUpdate
+	public void publierEnchere(Enchere ench) throws ForbiddenBidOperation
 	{
 		if (!userEnchere.contains(ench))
 		{
-			throw new ForbiddenBidUpdate();
+			throw new ForbiddenBidOperation("Error updating Bid. Probably not your bid");
 		} else
 		{
 			ench.setEtat(Etat.PUBLIEE);
@@ -84,15 +91,15 @@ public class User implements Acheteur, Vendeur, ObservateurEncheres
 	}
 
 	@Override
-	public void annulerEnchere(Enchere ench) throws ForbiddenBidUpdate, ForbiddenBidCancellation
+	public void annulerEnchere(Enchere ench) throws ForbiddenBidOperation 
 	{
 		if (!userEnchere.contains(ench))
 		{
-			throw new ForbiddenBidUpdate();
+			throw new ForbiddenBidOperation("Error updating Bid. Probably not your bid.");
 		}
 		if (ench.hasOffers())
 		{
-			throw new ForbiddenBidCancellation();
+			throw new ForbiddenBidOperation("Impossible d'annuler cette enchère. Le prix de réserve a déjà été atteint.");
 		}
 		ench.setEtat(Etat.ANNULEE);
 
@@ -104,5 +111,11 @@ public class User implements Acheteur, Vendeur, ObservateurEncheres
 	{
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public boolean isPrixReserveAtteint(Enchere ench)
+	{
+		return ench.isPrixReserveAtteint();
 	}
 }
