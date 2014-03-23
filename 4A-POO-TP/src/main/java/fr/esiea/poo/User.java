@@ -63,7 +63,6 @@ public class User implements Acheteur, Vendeur
 	public void emettreOffre(Enchere ench, Offre offre)
 	{
 		ench.addOffre(offre);
-
 	}
 
 	@Override
