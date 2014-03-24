@@ -3,6 +3,7 @@ package fr.esiea.poo;
 import java.util.ArrayList;
 import java.util.Date;
 
+import fr.esiea.poo.Alerte.TypeAlerte;
 import fr.esiea.poo.exception.ForbiddenBidOperation;
 import fr.esiea.poo.exception.InsuffisantOfferPrice;
 
@@ -13,7 +14,9 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 	private ArrayList<Enchere> userEnchere = new ArrayList<Enchere>();
 	private ArrayList<Offre> userOffres = new ArrayList<>();
 	private String login, nom, prenom;
-	
+	/** Pour les TDD */
+	private Alerte derniereAlerteRecue;
+
 	private SalleEnchere salesHouse = SalleEnchere.getInstance();
 
 	public User(String login, String nom, String prenom) {
@@ -27,6 +30,9 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 		Enchere enchere = new Enchere(obj, dateLimite);
 		userEnchere.add(enchere);
 		salesHouse.creerEnchere(enchere);
+		ArrayList<TypeAlerte> al = new ArrayList<>();
+		al.add(TypeAlerte.SURENCHERE);
+		this.inscriptionAlerte(enchere, al);
 
 		return enchere;
 	}
@@ -37,6 +43,9 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 		Enchere enchere = new Enchere(obj, dateLimite, prixMin, 0);
 		userEnchere.add(enchere);
 		salesHouse.creerEnchere(enchere);
+		ArrayList<TypeAlerte> al = new ArrayList<>();
+		al.add(TypeAlerte.SURENCHERE);
+		this.inscriptionAlerte(enchere, al);
 
 		return enchere;
 	}
@@ -47,7 +56,9 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 		Enchere enchere = new Enchere(obj, dateLimite, 0, prixReserve);
 		userEnchere.add(enchere);
 		salesHouse.creerEnchere(enchere);
-
+		ArrayList<TypeAlerte> al = new ArrayList<>();
+		al.add(TypeAlerte.SURENCHERE);
+		this.inscriptionAlerte(enchere, al);
 		return enchere;
 	}
 
@@ -57,8 +68,14 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 		Enchere enchere = new Enchere(obj, dateLimite, prixMin, prixReserve);
 		userEnchere.add(enchere);
 		salesHouse.creerEnchere(enchere);
-
+		ArrayList<TypeAlerte> al = new ArrayList<>();
+		al.add(TypeAlerte.SURENCHERE);
+		this.inscriptionAlerte(enchere, al);
 		return enchere;
+	}
+
+	public Alerte getDerniereAlerte() {
+		return this.derniereAlerteRecue;
 	}
 
 	@Override
@@ -111,15 +128,16 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 	}
 
 	@Override
-	public void receptAlerte(Alerte a){
+	public void receptAlerte(Alerte a) {
 		System.out.println("Alerte reçue : " + a.getEnchere().toString());
+		derniereAlerteRecue = a;
 	}
 
 	@Override
 	public boolean isPrixReserveAtteint(Enchere ench) {
 		return ench.isPrixReserveAtteint();
 	}
-	
+
 	@Override
 	public String toString() {
 		return "User [userEnchere=" + userEnchere + ", userOffres="

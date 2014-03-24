@@ -2,6 +2,7 @@ package fr.esiea.poo;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import fr.esiea.poo.Alerte.TypeAlerte;
 import fr.esiea.poo.exception.ForbiddenBidOperation;
@@ -16,6 +17,7 @@ public class Enchere extends ObjetObservable {
 				+ ", etat=" + etat + ", listOffres=" + listOffres + "]";
 	}
 
+	private int numEnchere;
 	private Produit produit;
 	private Date dateLimite;
 	/**
@@ -33,6 +35,22 @@ public class Enchere extends ObjetObservable {
 		this.dateLimite = dateLimite;
 		prixMin = prixReserve = 0;
 		etat = Etat.CREE;
+		numEnchere = produit.hashCode() + dateLimite.hashCode();
+	}
+
+	public Enchere(Produit pdt, Date dateLimite, double prixMin,
+			double prixReserve) {
+		super();
+		this.produit = pdt;
+		this.dateLimite = dateLimite;
+		this.prixMin = prixMin;
+		this.prixReserve = prixReserve;
+		etat = Etat.CREE;
+		numEnchere = produit.hashCode() + dateLimite.hashCode();
+	}
+	
+	public int getNumEnchere() {
+		return numEnchere;
 	}
 
 	public boolean addOffre(Offre o) throws InsuffisantOfferPrice {
@@ -73,16 +91,6 @@ public class Enchere extends ObjetObservable {
 		}
 
 		return listOffres.get(listOffres.size() - 1);
-	}
-
-	public Enchere(Produit pdt, Date dateLimite, double prixMin,
-			double prixReserve) {
-		super();
-		this.produit = pdt;
-		this.dateLimite = dateLimite;
-		this.prixMin = prixMin;
-		this.prixReserve = prixReserve;
-		etat = Etat.CREE;
 	}
 
 	public void annuler() throws ForbiddenOperationOnExpiredBid {
