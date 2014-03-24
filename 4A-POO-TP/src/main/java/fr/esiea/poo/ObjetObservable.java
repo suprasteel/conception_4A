@@ -115,28 +115,30 @@ public class ObjetObservable {
 	}
 
 	/**
-	 * On met chaque utilisateur à jour, il suffit d'appeler notifier(_alerte) sur
-	 * l'observé.
+	 * On met chaque utilisateur à jour, il suffit d'appeler notifier(_alerte)
+	 * sur l'observé. <br>
+	 * Cette méthode notifie les utilisateurs enregistrés en fonction des alertes
+	 * qu'ils souhaitent recevoir.
 	 */
-	protected void notifier(Alerte a) {
-		if (a.getAlerteType() == TypeAlerte.SURENCHERE) {
+	protected void notifier(Alerte _alerte) {
+		if (_alerte.getAlerteType() == TypeAlerte.SURENCHERE) {
 			for (ObservateurEncheres lObservateur : setObservateursNouvelleOffre) {
-				lObservateur.receptAlerte(a);
+				lObservateur.receptAlerte(_alerte);
 			}
 		}
-		if (a.getAlerteType() == TypeAlerte.RESERVE_ATTEINTE) {
+		if (_alerte.getAlerteType() == TypeAlerte.RESERVE_ATTEINTE) {
 			for (ObservateurEncheres lObservateur : setObservateursReserveAtteinte) {
-				lObservateur.receptAlerte(a);
+				lObservateur.receptAlerte(_alerte);
 			}
 		}
-		if (a.getAlerteType() == TypeAlerte.FIN_ENCHERE) {
+		if (_alerte.getAlerteType() == TypeAlerte.FIN_ENCHERE) {
 			for (ObservateurEncheres lObservateur : setObservateursFinEnchere) {
-				lObservateur.receptAlerte(a);
+				lObservateur.receptAlerte(_alerte);
 			}
 		}
-		if (a.getAlerteType() == TypeAlerte.ANNULATION) {
+		if (_alerte.getAlerteType() == TypeAlerte.ANNULATION) {
 			for (ObservateurEncheres lObservateur : setObservateursAnnule) {
-				lObservateur.receptAlerte(a);
+				lObservateur.receptAlerte(_alerte);
 			}
 		}
 	}

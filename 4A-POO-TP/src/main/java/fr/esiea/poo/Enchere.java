@@ -9,13 +9,8 @@ import fr.esiea.poo.exception.ForbiddenBidOperation;
 import fr.esiea.poo.exception.ForbiddenOperationOnExpiredBid;
 import fr.esiea.poo.exception.InsuffisantOfferPrice;
 
+/** Classe représentant une enchere */
 public class Enchere extends ObjetObservable {
-	@Override
-	public String toString() {
-		return "Enchere [produit=" + produit + ", dateLimite=" + dateLimite
-				+ ", prixMin=" + prixMin + ", prixReserve=" + prixReserve
-				+ ", etat=" + etat + ", listOffres=" + listOffres + "]";
-	}
 
 	private int numEnchere;
 	private Produit produit;
@@ -196,4 +191,10 @@ public class Enchere extends ObjetObservable {
 		return prixMin;
 	}
 
+	@Override
+	public String toString() {
+		return "Enchere [produit=" + produit + ", dateLimite=" + dateLimite
+				+ ", prixMin=" + prixMin + ", prixReserve=" + prixReserve
+				+ ", etat=" + etat + ", listOffres=" + listOffres + "]";
+	}
 }

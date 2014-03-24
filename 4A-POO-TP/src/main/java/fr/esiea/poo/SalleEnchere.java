@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Classe systeme (singleton) représentant le systeme d'enchere central
  * 
- * @author Thibaut
+ * @author Thibaut 
  * 
  */
 public class SalleEnchere {

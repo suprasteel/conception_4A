@@ -4,6 +4,7 @@ import java.util.Date;
 
 import fr.esiea.poo.exception.ForbiddenBidOperation;
 
+/** Interface Vendeur */
 public interface Vendeur
 {
 	/**

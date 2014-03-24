@@ -16,10 +16,10 @@ public interface Acheteur
 	Offre emettreOffre(Enchere ench, double prix) throws ForbiddenBidOperation;
 
 	/**
-	 * Retourne vrai si le prix de réserve à été atteind, faux sinon
+	 * Retourne vrai si le prix de réserve à été atteint, faux sinon
 	 * 
 	 * @param ench
-	 * @return
+	 * @return boolean
 	 */
 	boolean isPrixReserveAtteint(Enchere ench);
 

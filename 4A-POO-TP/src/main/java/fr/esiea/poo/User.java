@@ -17,17 +17,23 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 	/** Pour les TDD */
 	private Alerte derniereAlerteRecue;
 
+	/** Singleton qui centralise les enchères */
 	private SalleEnchere salesHouse = SalleEnchere.getInstance();
 
+	/** Constructeur d'un utilisateur */
 	public User(String login, String nom, String prenom) {
 		this.login = login;
 		this.nom = nom;
 		this.prenom = prenom;
 	}
 
+	/**
+	 * Créer une enchère à partir d'un produit et d'une date de fin d'enchère.<br>
+	 * Cette méthode abonne automatiquement l'user aux alertes de surrenchères.
+	 * */
 	@Override
-	public Enchere creerEnchere(Produit obj, Date dateLimite) {
-		Enchere enchere = new Enchere(obj, dateLimite);
+	public Enchere creerEnchere(Produit _produit, Date _dateLimite) {
+		Enchere enchere = new Enchere(_produit, _dateLimite);
 		userEnchere.add(enchere);
 		salesHouse.creerEnchere(enchere);
 		ArrayList<TypeAlerte> al = new ArrayList<>();
@@ -37,6 +43,10 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 		return enchere;
 	}
 
+	/**
+	 * Créer une enchère à partir d'un produit et d'une date de fin d'enchère.<br>
+	 * Cette méthode abonne automatiquement l'user aux alertes de surrenchères.
+	 * */
 	@Override
 	public Enchere creerEncherePrixMin(Produit obj, Date dateLimite,
 			double prixMin) {
@@ -50,6 +60,10 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 		return enchere;
 	}
 
+	/**
+	 * Créer une enchère à partir d'un produit et d'une date de fin d'enchère.<br>
+	 * Cette méthode abonne automatiquement l'user aux alertes de surrenchères.
+	 * */
 	@Override
 	public Enchere creerEncherePrixReserve(Produit obj, Date dateLimite,
 			double prixReserve) {
@@ -62,6 +76,10 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 		return enchere;
 	}
 
+	/**
+	 * Créer une enchère à partir d'un produit et d'une date de fin d'enchère.<br>
+	 * Cette méthode abonne automatiquement l'user aux alertes de surrenchères.
+	 * */
 	@Override
 	public Enchere creerEnchere(Produit obj, Date dateLimite, double prixMin,
 			double prixReserve) {
@@ -74,10 +92,18 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 		return enchere;
 	}
 
+	/**
+	 * Permet de récupérer la dernière alerte reçue par un utilisateur (utile
+	 * pour les TDD sur alertes)
+	 */
 	public Alerte getDerniereAlerte() {
 		return this.derniereAlerteRecue;
 	}
 
+	/**
+	 * Lance une exception de type ForbiddenBidOperation si l'offre n'est pas
+	 * possible
+	 */
 	@Override
 	public Offre emettreOffre(Enchere ench, double prix)
 			throws ForbiddenBidOperation {
@@ -101,6 +127,7 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 		return offre;
 	}
 
+	/** Permet de rendre accessible à tous les Users l'enchère dans salesHouse */
 	@Override
 	public void publierEnchere(Enchere ench) throws ForbiddenBidOperation {
 		if (!userEnchere.contains(ench)) {
@@ -112,6 +139,10 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 		}
 	}
 
+	/**
+	 * Lance une exception de type ForbiddenBidOperation si l'annulation n'est pas
+	 * possible (prix de reserve atteint ou enchere d'un autre user).
+	 */
 	@Override
 	public void annulerEnchere(Enchere ench) throws ForbiddenBidOperation {
 		if (!userEnchere.contains(ench)) {
@@ -127,12 +158,15 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 		salesHouse.annulerEnchere(ench);
 	}
 
+	/** Action à réaliser une fois l'alerte reçue. Pour aller plus loin il serait utile d'utiliser un pattern foncteur. */
 	@Override
 	public void receptAlerte(Alerte a) {
-		System.out.println(this.login + " Alerte reçue : " +a.getAlerteType()+" "+ a.getEnchere().toString());
+		System.out.println(this.login + " Alerte reçue : " + a.getAlerteType()
+				+ " " + a.getEnchere().toString());
 		derniereAlerteRecue = a;
 	}
 
+	/** Obtenir l'information de prix de reserve atteint pour une enchère */
 	@Override
 	public boolean isPrixReserveAtteint(Enchere ench) {
 		return ench.isPrixReserveAtteint();

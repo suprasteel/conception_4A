@@ -5,7 +5,9 @@ import java.util.List;
 import fr.esiea.poo.Alerte.TypeAlerte;
 
 /**
- * Interface des observateurs d'enchères
+ * Interface des observateurs d'enchères. Utilisation d'une classe abstraite
+ * pour définir les méthodes d'abonnement dans cette classe et mieux suivre le
+ * principe SRP.
  * */
 public abstract class ObservateurEncheres {
 
@@ -14,15 +16,13 @@ public abstract class ObservateurEncheres {
 	 * observé
 	 */
 	public abstract void receptAlerte(Alerte a);
-	
+
 	/**
 	 * Méthode d'abonnement de l'User à une alertes.<br>
 	 * 
 	 */
-	public void inscriptionAlerte(Enchere _enchere, TypeAlerte alerte)
-	{
-		switch (alerte)
-		{
+	public void inscriptionAlerte(Enchere _enchere, TypeAlerte alerte) {
+		switch (alerte) {
 		case ANNULATION:
 			_enchere.attacherObsAnnule(this);
 			break;
@@ -85,7 +85,7 @@ public abstract class ObservateurEncheres {
 			_enchere.attacherObsNvlOffre(this);
 		}
 	}
-	
+
 	/**
 	 * Méthode de désabonnement de l'User à des alertes.<br>
 	 * Il suffit de passer une liste contenant les types des alertes que l'user
@@ -93,7 +93,7 @@ public abstract class ObservateurEncheres {
 	 * Méthode développée dans ObservateurEnchere par commodité,
 	 * l'implémentation de User se rapproche mieux du principe SRP
 	 */
-	public void desabonnementAlertesEnchere(Enchere _enchere){
+	public void desabonnementAlertesEnchere(Enchere _enchere) {
 		_enchere.supprimerObsToutesAlertes(this);
 	}
 
