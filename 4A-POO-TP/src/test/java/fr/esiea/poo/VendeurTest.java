@@ -167,11 +167,12 @@ public class VendeurTest
 	
 	/**
 	 * Test de l'interdictiction de surrenchier sur ses enchère, meme en etant aussi acheteur.
+	 * @throws InsuffisantOfferPrice 
 	 * 
 	 * @throws ForbiddenBidCancellation
 	 */
 	@Test(expected = ForbiddenBidOperation.class)
-	public void testEncherirMonEnchereKO() throws ForbiddenBidOperation
+	public void testEncherirMonEnchereKO() throws ForbiddenBidOperation, InsuffisantOfferPrice
 	{
 		Enchere ench = vendeur1.creerEnchere(obj, dateLimite, prixMin, prixReserve);
 		vendeur1.publierEnchere(ench);

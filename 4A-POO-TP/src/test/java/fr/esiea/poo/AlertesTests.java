@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.esiea.poo.exception.ForbiddenBidOperation;
+import fr.esiea.poo.exception.InsuffisantOfferPrice;
 
 public class AlertesTests {
 
@@ -39,9 +40,10 @@ public class AlertesTests {
 	 * Test de la reception de l'alerte par le vendeur.
 	 * 
 	 * @throws ForbiddenBidOperation
+	 * @throws InsuffisantOfferPrice 
 	 */
 	@Test
-	public void testVendeurReceptAlertOK() throws ForbiddenBidOperation {
+	public void testVendeurReceptAlertOK() throws ForbiddenBidOperation, InsuffisantOfferPrice {
 		ench = vend.creerEnchere(new Produit("idp", "desc"), dateLimite, 11.0,
 				15.5);
 		// Doit etre notifié de la surrenchère
@@ -56,9 +58,10 @@ public class AlertesTests {
 	 * d'une offre.
 	 * 
 	 * @throws ForbiddenBidOperation
+	 * @throws InsuffisantOfferPrice 
 	 */
 	@Test
-	public void testAcheteurReceptAlertOK() throws ForbiddenBidOperation {
+	public void testAcheteurReceptAlertOK() throws ForbiddenBidOperation, InsuffisantOfferPrice {
 		ench = vend.creerEnchere(new Produit("idp", "desc"), dateLimite, 11.0,
 				26.0);
 		Acheteur ach2 = new User("loginAcheteur", "sonNom", "sonPrénom");

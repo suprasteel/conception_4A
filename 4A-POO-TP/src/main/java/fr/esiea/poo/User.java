@@ -106,23 +106,17 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 	 */
 	@Override
 	public Offre emettreOffre(Enchere ench, double prix)
-			throws ForbiddenBidOperation {
+			throws ForbiddenBidOperation, InsuffisantOfferPrice {
 		if (this.userEnchere.contains(ench)) {
 			throw new ForbiddenBidOperation(
 					"Vous ne pouvez pas enchérir sur une enchere qui vous appartient!");
 		}
 		if (prix < ench.getPrixMin()) {
-			throw new ForbiddenBidOperation(
-					"Le prix de l'offre est inférieur au prix minimum de l'enchère!");
+			throw new InsuffisantOfferPrice(InsuffisantOfferPrice.INF_PRIX_MIN);
 		}
 		Offre offre = new Offre(this, prix);
 		userOffres.add(offre);
-		try {
-			ench.addOffre(offre);
-		} catch (InsuffisantOfferPrice e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ench.addOffre(offre);
 
 		return offre;
 	}

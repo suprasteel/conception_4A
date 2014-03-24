@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import fr.esiea.poo.Alerte.TypeAlerte;
 import fr.esiea.poo.exception.ForbiddenBidOperation;
+import fr.esiea.poo.exception.InsuffisantOfferPrice;
 
 /**
  * Classe de executant un pseudo test d'intégration
@@ -47,7 +48,7 @@ public class IntegrationTest
 	}
 
 	@Test
-	public void integrationSystemeTest() throws ForbiddenBidOperation
+	public void integrationSystemeTest() throws ForbiddenBidOperation, InsuffisantOfferPrice
 	{
 		//Toto crée une enchère, on s'assure que le système la prend en compte
 		Enchere enchereToto = toto.creerEnchere(produitToto, dateLimiteToto, 95, 150000);

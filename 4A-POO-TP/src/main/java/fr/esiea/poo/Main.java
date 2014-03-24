@@ -6,6 +6,7 @@ import java.util.List;
 
 import fr.esiea.poo.Alerte.TypeAlerte;
 import fr.esiea.poo.exception.ForbiddenBidOperation;
+import fr.esiea.poo.exception.InsuffisantOfferPrice;
 
 /**
  * Classe main modelisant le systeme A remplacer eventuellement par un singleton
@@ -44,7 +45,7 @@ public class Main {
 		/** Toto essaye une offre */
 		try {
 			toto.emettreOffre(encheres.get(0), 15.50);
-		} catch (ForbiddenBidOperation e) {
+		} catch (InsuffisantOfferPrice | ForbiddenBidOperation e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
