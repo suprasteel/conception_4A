@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.esiea.poo.exception.ForbiddenBidOperation;
+import fr.esiea.poo.exception.InsuffisantOfferPrice;
 
 public class AcheteurTest
 {
@@ -38,9 +39,10 @@ public class AcheteurTest
 	 * Test du cas nominal de l'emission d'offre
 	 * 
 	 * @throws ForbiddenBidOperation
+	 * @throws InsuffisantOfferPrice 
 	 */
 	@Test
-	public void testEmettreOffreOK() throws ForbiddenBidOperation
+	public void testEmettreOffreOK() throws ForbiddenBidOperation, InsuffisantOfferPrice
 	{
 		Enchere ench = new Enchere(new Produit("idp", "desc"), dateLimite, 11.0, 15.5);
 
@@ -53,9 +55,10 @@ public class AcheteurTest
 	 * Test d'emission d'offre par le vendeur sur son enchère
 	 * 
 	 * @throws ForbiddenBidOperation
+	 * @throws InsuffisantOfferPrice 
 	 */
 	@Test (expected=ForbiddenBidOperation.class)
-	public void testEmettreOffreKOVendeurEqualsAcheteur() throws ForbiddenBidOperation
+	public void testEmettreOffreKOVendeurEqualsAcheteur() throws ForbiddenBidOperation, InsuffisantOfferPrice
 	{
 		Vendeur vendeur = (Vendeur) this.ach;
 		Enchere enchere = vendeur.creerEnchere(new Produit("idp", "desc"), dateLimite, 11.0, 15.5);
@@ -67,9 +70,10 @@ public class AcheteurTest
 	 * Test d'emission d'offre par le vendeur sur son enchère
 	 * 
 	 * @throws ForbiddenBidOperation
+	 * @throws InsuffisantOfferPrice 
 	 */
-	@Test (expected=ForbiddenBidOperation.class)
-	public void testEmettreOffreKOPrixMin() throws ForbiddenBidOperation
+	@Test (expected=InsuffisantOfferPrice.class)
+	public void testEmettreOffreKOPrixMin() throws ForbiddenBidOperation, InsuffisantOfferPrice
 	{
 		Enchere enchere = new Enchere(new Produit("idp", "desc"), dateLimite, 11.0, 15.5);
 
@@ -83,9 +87,10 @@ public class AcheteurTest
 	 * acheteur
 	 * 
 	 * @throws ForbiddenBidOperation
+	 * @throws InsuffisantOfferPrice 
 	 */
 	@Test
-	public void getPrixReserveAtteint() throws ForbiddenBidOperation
+	public void getPrixReserveAtteint() throws ForbiddenBidOperation, InsuffisantOfferPrice
 	{
 		Enchere ench = new Enchere(new Produit("idp", "desc"), dateLimite, 11.0, 15.5);
 		this.ach.emettreOffre(ench, 13);
