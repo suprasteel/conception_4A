@@ -6,6 +6,9 @@ public class InsuffisantOfferPrice extends Exception {
 	 */
 	private static final long serialVersionUID = 4932550467350867507L;
 
+	/**
+	 * Messages standards
+	 * */
 	public static final String INF_OFFRE_PRECEDENTE = "nouvelle offre inférieure à la derniere offre émise";
 	public static final String INF_PRIX_MIN = "nouvelle offre inférieure au prix minimum";
 

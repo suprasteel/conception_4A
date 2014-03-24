@@ -35,19 +35,21 @@ public class Main {
 				"Objet destiné à s'asseoir..."), Date.valueOf("2015-12-12"),
 				10.00, 100.00));// Bob crée une enchere sur sa
 		// chaise, 10 min, reserve à 100
-
 		/**
 		 * Lea s'inscrit pour recevoir des alertes sur cette chaise, elle veut
 		 * toutes les notifications
 		 */
-		lea.inscriptionAlerte(encheres.get(0), new ArrayList<TypeAlerte>());
+		lea.inscriptionAlerte(encheres.get(0), typeAlerteList);
 
+		/** Toto essaye une offre */
 		try {
 			toto.emettreOffre(encheres.get(0), 15.50);
 		} catch (ForbiddenBidOperation e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 
 	}
 

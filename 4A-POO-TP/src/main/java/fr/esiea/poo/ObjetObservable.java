@@ -7,7 +7,7 @@ import fr.esiea.poo.Alerte.TypeAlerte;
 /**
  * Interface d'objet observé
  */
-public class ObjetAObserver {
+public class ObjetObservable {
 
 	private HashSet<ObservateurEncheres> setObservateursNouvelleOffre = new HashSet<ObservateurEncheres>();
 	private HashSet<ObservateurEncheres> setObservateursReserveAtteinte = new HashSet<ObservateurEncheres>();

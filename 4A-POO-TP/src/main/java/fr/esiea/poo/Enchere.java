@@ -3,10 +3,9 @@ package fr.esiea.poo;
 import java.util.ArrayList;
 import java.util.Date;
 
-import fr.esiea.poo.ObjetAObserver;
 import fr.esiea.poo.exception.InsuffisantOfferPrice;
 
-public class Enchere extends ObjetAObserver
+public class Enchere extends ObjetObservable
 {
 	@Override
 	public String toString() {
@@ -17,6 +16,7 @@ public class Enchere extends ObjetAObserver
 
 	private Produit produit;
 	private Date dateLimite;
+	/** Le prix de réserve n'a pas de getter, il n'est connu que par le constructeur */
 	private double prixMin, prixReserve;
 	// CREE, PUBLIEE, ANNULEE, TERMINEE
 	private Etat etat;

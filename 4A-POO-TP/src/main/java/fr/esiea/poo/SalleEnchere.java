@@ -9,55 +9,51 @@ import java.util.List;
  * @author Thibaut
  * 
  */
-public class SalleEnchere
-{
+public class SalleEnchere {
 	private static SalleEnchere instance;
 	private ArrayList<Enchere> encherePubliees, enchereCrees, enchereAnnulees;
 
-	private SalleEnchere()
-	{
+	private SalleEnchere() {
+		/** Enchères visibles et disponibles aux acheteurs */
 		this.encherePubliees = new ArrayList<>();
+		/** Enchères non visibles */
 		this.enchereCrees = new ArrayList<>();
+		/**
+		 * Enchère annulées, expirées, etc... Il n'est plus possible de faire
+		 * d'offres dessus
+		 */
 		this.enchereAnnulees = new ArrayList<>();
 	}
 
-	public static SalleEnchere getInstance()
-	{
-		if (instance == null)
-		{
+	public static SalleEnchere getInstance() {
+		if (instance == null) {
 			instance = new SalleEnchere();
 		}
 		return instance;
 	}
 
-	public List<Enchere> getEncherePubliees()
-	{
+	public List<Enchere> getEncherePubliees() {
 		return encherePubliees;
 	}
 
-	public List<Enchere> getEnchereCrees()
-	{
+	public List<Enchere> getEnchereCrees() {
 		return this.enchereCrees;
 	}
 
-	public List<Enchere> getEnchereAnnulees()
-	{
+	public List<Enchere> getEnchereAnnulees() {
 		return this.enchereAnnulees;
 	}
 
-	public void creerEnchere(Enchere enchere)
-	{
+	public void creerEnchere(Enchere enchere) {
 		instance.enchereCrees.add(enchere);
 	}
 
-	public void publierEnchere(Enchere ench)
-	{
+	public void publierEnchere(Enchere ench) {
 		instance.enchereCrees.remove(ench);
 		instance.encherePubliees.add(ench);
 	}
 
-	public void annulerEnchere(Enchere ench)
-	{
+	public void annulerEnchere(Enchere ench) {
 		instance.encherePubliees.remove(ench);
 		instance.enchereAnnulees.add(ench);
 	}

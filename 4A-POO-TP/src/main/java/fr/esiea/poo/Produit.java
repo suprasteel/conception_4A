@@ -3,7 +3,8 @@ package fr.esiea.poo;
 public class Produit
 {
 	private String id;
-	private String description;	
+	private String description;
+	private User proprietaire;
 
 	public Produit(String _id, String _description)
 	{
@@ -14,6 +15,11 @@ public class Produit
 	@Override
 	public String toString() {
 		return "Produit [id=" + id + ", description=" + description + "]";
+	}
+	
+	/** Fonction package non demandée dans l'énoncé mais qui permet de définir le proprietaire */
+	void setPropietaire(){
+		
 	}
 
 }

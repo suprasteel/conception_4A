@@ -85,6 +85,7 @@ public class VendeurTest
 
 	/**
 	 * Test qui crée un enchère avec tout les attributs définits
+	 * "Un utilisateur peut creer une enchere"
 	 */
 	@Test
 	public void testCreerEnchereComplet()
@@ -100,6 +101,7 @@ public class VendeurTest
 
 	/**
 	 * Test de la fonction de publication d'une enchere dans le système
+	 * "Un utilisateur peut publier une enchere"
 	 */
 	@Test
 	public void testPublierEnchere()

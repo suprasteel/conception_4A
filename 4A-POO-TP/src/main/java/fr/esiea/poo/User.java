@@ -2,9 +2,7 @@ package fr.esiea.poo;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import fr.esiea.poo.Alerte.TypeAlerte;
 import fr.esiea.poo.exception.ForbiddenBidOperation;
 import fr.esiea.poo.exception.InsuffisantOfferPrice;
 
@@ -15,6 +13,7 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 	private ArrayList<Enchere> userEnchere = new ArrayList<Enchere>();
 	private ArrayList<Offre> userOffres = new ArrayList<>();
 	private String login, nom, prenom;
+	
 	private SalleEnchere salesHouse = SalleEnchere.getInstance();
 
 	public User(String login, String nom, String prenom) {
@@ -120,4 +119,12 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 	public boolean isPrixReserveAtteint(Enchere ench) {
 		return ench.isPrixReserveAtteint();
 	}
+	
+	@Override
+	public String toString() {
+		return "User [userEnchere=" + userEnchere + ", userOffres="
+				+ userOffres + ", login=" + login + ", nom=" + nom
+				+ ", prenom=" + prenom + ", salesHouse=" + salesHouse + "]";
+	}
+
 }
