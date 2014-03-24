@@ -42,7 +42,6 @@ public class ObjetObservable {
 	 * 
 	 * @param pObservateur
 	 */
-
 	public void attacherObsReserveAtteinte(ObservateurEncheres pObservateur) {
 		setObservateursReserveAtteinte.add(pObservateur);
 	}

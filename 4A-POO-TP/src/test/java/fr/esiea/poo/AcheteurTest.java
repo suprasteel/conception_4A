@@ -55,7 +55,7 @@ public class AcheteurTest
 	 * @throws ForbiddenBidOperation
 	 */
 	@Test (expected=ForbiddenBidOperation.class)
-	public void testEmettreOffreKOVendeur() throws ForbiddenBidOperation
+	public void testEmettreOffreKOVendeurEqualsAcheteur() throws ForbiddenBidOperation
 	{
 		Vendeur vendeur = (Vendeur) this.ach;
 		Enchere enchere = vendeur.creerEnchere(new Produit("idp", "desc"), dateLimite, 11.0, 15.5);

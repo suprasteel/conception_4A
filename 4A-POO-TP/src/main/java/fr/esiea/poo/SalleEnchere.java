@@ -1,6 +1,7 @@
 package fr.esiea.poo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +33,11 @@ public class SalleEnchere {
 		return instance;
 	}
 
+	/** Fournit la date pour les enchère (cette classe est la seule à connaitre le temps) */
+	public static Date getDate(){
+		return new Date();
+	}
+	
 	public List<Enchere> getEncherePubliees() {
 		return encherePubliees;
 	}

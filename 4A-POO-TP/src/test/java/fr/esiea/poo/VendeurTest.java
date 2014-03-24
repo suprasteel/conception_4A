@@ -13,7 +13,7 @@ import fr.esiea.poo.exception.InsuffisantOfferPrice;
 
 public class VendeurTest
 {
-	private Vendeur vendeur;
+	private User vendeur1;
 	private Produit obj;
 	private Date dateLimite;
 	private double prixMin, prixReserve;
@@ -28,7 +28,7 @@ public class VendeurTest
 	@Before
 	public void setUp()
 	{
-		this.vendeur = new User("testUser", "User", "Test");
+		this.vendeur1 = new User("testUser", "User", "Test");
 		this.obj = new Produit("1234A", "Obj test");
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, 30);
@@ -46,7 +46,7 @@ public class VendeurTest
 	{
 		Enchere ench = new Enchere(obj, dateLimite);
 
-		Enchere e = this.vendeur.creerEnchere(obj, dateLimite);
+		Enchere e = this.vendeur1.creerEnchere(obj, dateLimite);
 
 		Assert.assertEquals(ench, e);
 		Assert.assertTrue(salesHouse.getEnchereCrees().contains(e));
@@ -61,7 +61,7 @@ public class VendeurTest
 	{
 		Enchere ench = new Enchere(obj, dateLimite, prixMin, 0);
 
-		Enchere e = this.vendeur.creerEncherePrixMin(obj, dateLimite, prixMin);
+		Enchere e = this.vendeur1.creerEncherePrixMin(obj, dateLimite, prixMin);
 
 		Assert.assertEquals(ench, e);
 		Assert.assertTrue(salesHouse.getEnchereCrees().contains(e));
@@ -76,7 +76,7 @@ public class VendeurTest
 	{
 		Enchere ench = new Enchere(obj, dateLimite, 0, prixReserve);
 
-		Enchere e = this.vendeur.creerEncherePrixReserve(obj, dateLimite, prixReserve);
+		Enchere e = this.vendeur1.creerEncherePrixReserve(obj, dateLimite, prixReserve);
 
 		Assert.assertEquals(ench, e);
 		Assert.assertTrue(salesHouse.getEnchereCrees().contains(e));
@@ -92,7 +92,7 @@ public class VendeurTest
 	{
 		Enchere ench = new Enchere(obj, dateLimite, prixMin, prixReserve);
 
-		Enchere e = this.vendeur.creerEnchere(obj, dateLimite, prixMin, prixReserve);
+		Enchere e = this.vendeur1.creerEnchere(obj, dateLimite, prixMin, prixReserve);
 
 		Assert.assertEquals(ench, e);
 		Assert.assertTrue(salesHouse.getEnchereCrees().contains(e));
@@ -106,11 +106,11 @@ public class VendeurTest
 	@Test
 	public void testPublierEnchere()
 	{
-		Enchere ench = this.vendeur.creerEnchere(obj, dateLimite, prixMin, prixReserve);
+		Enchere ench = this.vendeur1.creerEnchere(obj, dateLimite, prixMin, prixReserve);
 
 		try
 		{
-			this.vendeur.publierEnchere(ench);
+			this.vendeur1.publierEnchere(ench);
 		} catch (ForbiddenBidOperation e)
 		{
 			System.err.println(e.getMessage());
@@ -127,12 +127,12 @@ public class VendeurTest
 	@Test
 	public void testAnnulerEnchereOK()
 	{
-		Enchere ench = vendeur.creerEnchere(obj, dateLimite, prixMin, prixReserve);
+		Enchere ench = vendeur1.creerEnchere(obj, dateLimite, prixMin, prixReserve);
 
 		try
 		{
-			vendeur.publierEnchere(ench);
-			vendeur.annulerEnchere(ench);
+			vendeur1.publierEnchere(ench);
+			vendeur1.annulerEnchere(ench);
 		} catch (ForbiddenBidOperation e)
 		{
 			System.err.println(e.getMessage());
@@ -152,15 +152,30 @@ public class VendeurTest
 	@Test(expected = ForbiddenBidOperation.class)
 	public void testAnnulerEnchereKO() throws ForbiddenBidOperation
 	{
-		Enchere ench = vendeur.creerEnchere(obj, dateLimite, prixMin, prixReserve);
+		Enchere ench = vendeur1.creerEnchere(obj, dateLimite, prixMin, prixReserve);
 
-		vendeur.publierEnchere(ench);
+		vendeur1.publierEnchere(ench);
 		try {
+			//Prix de reserve à 49,99
 			ench.addOffre(new Offre(null, 50));
 		} catch (InsuffisantOfferPrice e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		vendeur.annulerEnchere(ench);
+		vendeur1.annulerEnchere(ench);
+	}
+	
+	/**
+	 * Test de l'interdictiction de surrenchier sur ses enchère, meme en etant aussi acheteur.
+	 * 
+	 * @throws ForbiddenBidCancellation
+	 */
+	@Test(expected = ForbiddenBidOperation.class)
+	public void testEncherirMonEnchereKO() throws ForbiddenBidOperation
+	{
+		Enchere ench = vendeur1.creerEnchere(obj, dateLimite, prixMin, prixReserve);
+		vendeur1.publierEnchere(ench);
+		vendeur1.emettreOffre(ench, 50.0);
+		
 	}
 }

@@ -1,5 +1,7 @@
 package fr.esiea.poo;
 
+import java.util.Date;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -9,7 +11,11 @@ import org.junit.Test;
 public class UserTest
 {
 	
-	private User user;
+	private User vendeur;
+	private Enchere e;
+	private double prixMin = 10;
+	private double prixReserve = 100;
+	
 //	private Seller seller;
 //	private Buyer buyer;
 	
@@ -28,7 +34,8 @@ public class UserTest
 	@Before
 	public void setUp() throws Exception
 	{
-		System.out.println("setUp appel avant chaque methode de test");
+		vendeur = new User("login1", "nom1", "prenom1");
+		vendeur.creerEnchere(new Produit("Un produit", "Description de un produit"), new Date(), prixMin, prixReserve);
 	}
 
 	@After
@@ -40,12 +47,14 @@ public class UserTest
 	@Test
 	public void test1()
 	{
-		System.out.println("Appel methode test1");
+		System.out.println("Test des tests");
 	}
 
 	@Test
 	public void test2()
 	{
-		System.out.println("Appel methode test2");
+		System.out.println("test2 des tests");
 	}
+	
+	
 }
