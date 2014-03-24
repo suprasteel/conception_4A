@@ -129,7 +129,7 @@ public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 
 	@Override
 	public void receptAlerte(Alerte a) {
-		System.out.println("Alerte reçue : " + a.getEnchere().toString());
+		System.out.println(this.login + " Alerte reçue : " +a.getAlerteType()+" "+ a.getEnchere().toString());
 		derniereAlerteRecue = a;
 	}
 

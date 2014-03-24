@@ -14,6 +14,32 @@ public abstract class ObservateurEncheres {
 	 * observé
 	 */
 	public abstract void receptAlerte(Alerte a);
+	
+	/**
+	 * Méthode d'abonnement de l'User à une alertes.<br>
+	 * 
+	 */
+	public void inscriptionAlerte(Enchere _enchere, TypeAlerte alerte)
+	{
+		switch (alerte)
+		{
+		case ANNULATION:
+			_enchere.attacherObsAnnule(this);
+			break;
+		case FIN_ENCHERE:
+			_enchere.attacherObsFinEnchere(this);
+			break;
+		case RESERVE_ATTEINTE:
+			_enchere.attacherObsReserveAtteinte(this);
+			break;
+		case SURENCHERE:
+			_enchere.attacherObsNvlOffre(this);
+			break;
+
+		default:
+			break;
+		}
+	}
 
 	/**
 	 * Méthode d'abonnement de l'User à des alertes.<br>
