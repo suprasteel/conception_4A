@@ -11,4 +11,9 @@ public class Produit
 		this.description = _description;
 	}
 
+	@Override
+	public String toString() {
+		return "Produit [id=" + id + ", description=" + description + "]";
+	}
+
 }

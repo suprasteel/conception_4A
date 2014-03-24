@@ -7,13 +7,13 @@ public class Alerte {
 	//• Une offre supérieure à celle émise par l'acheteur a été émise par un autre acheteur.
 	//L'enchere arrive à son terme
 	/** Enumération des états d'alerte possibles */
-	public enum TypeAlerte {
+	public static enum TypeAlerte {
 		ANNULATION, SURENCHERE, RESERVE_ATTEINTE, FIN_ENCHERE
 	}
 	
 	/** Attributs d'Alertes */
-	TypeAlerte typeAlerte;
-	Enchere enchere;
+	private TypeAlerte typeAlerte;
+	private Enchere enchere;
 	
 	/** Constructeur d'Alertes */
 	public Alerte(TypeAlerte _typeAlerte, Enchere _enchere) {
@@ -21,6 +21,15 @@ public class Alerte {
 		this.typeAlerte = _typeAlerte;
 		this.enchere = _enchere;
 		
+	}
+
+	/** Obtenir l'enchere de l'alerte */
+	public Enchere getEnchere() {
+		return enchere;
+	}
+
+	public TypeAlerte getAlerteType() {
+		return typeAlerte;
 	}
 	
 }

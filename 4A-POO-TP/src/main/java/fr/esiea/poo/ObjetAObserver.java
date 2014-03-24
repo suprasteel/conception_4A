@@ -120,22 +120,22 @@ public class ObjetAObserver {
 	 * l'observé.
 	 */
 	protected void notifier(Alerte a) {
-		if (a.typeAlerte == TypeAlerte.SURENCHERE) {
+		if (a.getAlerteType() == TypeAlerte.SURENCHERE) {
 			for (ObservateurEncheres lObservateur : setObservateursNouvelleOffre) {
 				lObservateur.receptAlerte(a);
 			}
 		}
-		if (a.typeAlerte == TypeAlerte.RESERVE_ATTEINTE) {
+		if (a.getAlerteType() == TypeAlerte.RESERVE_ATTEINTE) {
 			for (ObservateurEncheres lObservateur : setObservateursReserveAtteinte) {
 				lObservateur.receptAlerte(a);
 			}
 		}
-		if (a.typeAlerte == TypeAlerte.FIN_ENCHERE) {
+		if (a.getAlerteType() == TypeAlerte.FIN_ENCHERE) {
 			for (ObservateurEncheres lObservateur : setObservateursFinEnchere) {
 				lObservateur.receptAlerte(a);
 			}
 		}
-		if (a.typeAlerte == TypeAlerte.ANNULATION) {
+		if (a.getAlerteType() == TypeAlerte.ANNULATION) {
 			for (ObservateurEncheres lObservateur : setObservateursAnnule) {
 				lObservateur.receptAlerte(a);
 			}

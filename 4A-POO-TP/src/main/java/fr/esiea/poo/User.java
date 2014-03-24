@@ -8,7 +8,10 @@ import fr.esiea.poo.Alerte.TypeAlerte;
 import fr.esiea.poo.exception.ForbiddenBidOperation;
 import fr.esiea.poo.exception.InsuffisantOfferPrice;
 
-public class User implements Acheteur, Vendeur, ObservateurEncheres {
+/**
+ * Classe
+ * */
+public class User extends ObservateurEncheres implements Acheteur, Vendeur {
 	private ArrayList<Enchere> userEnchere = new ArrayList<Enchere>();
 	private ArrayList<Offre> userOffres = new ArrayList<>();
 	private String login, nom, prenom;
@@ -108,51 +111,9 @@ public class User implements Acheteur, Vendeur, ObservateurEncheres {
 		salesHouse.annulerEnchere(ench);
 	}
 
-	/**
-	 * Méthode d'abonnement de l'User à des alertes.<br>
-	 * Il suffit de passer une liste contenant les types des alertes que l'user
-	 * souhaite recevoir, ainsi que l'enchere à laquelle il souhaite s'abonner.
-	 * 
-	 */
-	public void abonnementAlertesEnchere(Enchere _enchere, List<TypeAlerte> _listeAlertesDesirees) {
-		if (_listeAlertesDesirees.contains(TypeAlerte.ANNULATION)) {
-			_enchere.attacherObsAnnule(this);
-		}
-		if (_listeAlertesDesirees.contains(TypeAlerte.FIN_ENCHERE)) {
-			_enchere.attacherObsFinEnchere(this);
-		}
-		if (_listeAlertesDesirees.contains(TypeAlerte.RESERVE_ATTEINTE)) {
-			_enchere.attacherObsReserveAtteinte(this);
-		}
-		if (_listeAlertesDesirees.contains(TypeAlerte.SURENCHERE)) {
-			_enchere.attacherObsNvlOffre(this);
-		}
-	}
-	
-	/**
-	 * Méthode de désabonnement de l'User à des alertes.<br>
-	 * Il suffit de passer une liste contenant les types des alertes que l'user
-	 * souhaite annuler.
-	 */
-	public void desabonnementAlertesEnchere(Enchere _enchere, List<TypeAlerte> _listeAlertesASupprimer) {
-		if (_listeAlertesASupprimer.contains(TypeAlerte.ANNULATION)) {
-			_enchere.attacherObsAnnule(this);
-		}
-		if (_listeAlertesASupprimer.contains(TypeAlerte.FIN_ENCHERE)) {
-			_enchere.attacherObsFinEnchere(this);
-		}
-		if (_listeAlertesASupprimer.contains(TypeAlerte.RESERVE_ATTEINTE)) {
-			_enchere.attacherObsReserveAtteinte(this);
-		}
-		if (_listeAlertesASupprimer.contains(TypeAlerte.SURENCHERE)) {
-			_enchere.attacherObsNvlOffre(this);
-		}
-	}
-
 	@Override
-	public void receptAlerte(Alerte a) {
-		// TODO Auto-generated method stub
-
+	public void receptAlerte(Alerte a){
+		System.out.println("Alerte reçue : " + a.getEnchere().toString());
 	}
 
 	@Override

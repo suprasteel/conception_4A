@@ -4,11 +4,17 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import fr.esiea.poo.ObjetAObserver;
-import fr.esiea.poo.ObservateurEncheres;
 import fr.esiea.poo.exception.InsuffisantOfferPrice;
 
 public class Enchere extends ObjetAObserver
 {
+	@Override
+	public String toString() {
+		return "Enchere [produit=" + produit + ", dateLimite=" + dateLimite
+				+ ", prixMin=" + prixMin + ", prixReserve=" + prixReserve
+				+ ", etat=" + etat + ", listOffres=" + listOffres + "]";
+	}
+
 	private Produit produit;
 	private Date dateLimite;
 	private double prixMin, prixReserve;
