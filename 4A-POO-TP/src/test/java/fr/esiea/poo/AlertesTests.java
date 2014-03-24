@@ -21,8 +21,7 @@ public class AlertesTests {
 	// TODO ajouter controle sur ajout d'offre pas encore publiées
 
 	@Before
-	public void setUp()
-	{
+	public void setUp() {
 		this.ach = new User("a", "b", "c");
 		this.vend = new User("d", "e", "f");
 		this.prixMin = 0.99;
@@ -30,7 +29,6 @@ public class AlertesTests {
 		cal.add(Calendar.DATE, 30);
 		this.dateLimite = cal.getTime();
 		prixOffre = 25;
-		ench = new Enchere(new Produit("idp", "desc"), dateLimite, 11.0, 15.5);
 	}
 
 	// Un utilisateur dans son rôle d'Acheteur peut émettre des offres pour une
@@ -38,17 +36,36 @@ public class AlertesTests {
 	// par un autre utilisateur que lui.
 
 	/**
-	 * Test de la reception de l'alerte par l'user
+	 * Test de la reception de l'alerte par le vendeur.
 	 * 
 	 * @throws ForbiddenBidOperation
 	 */
 	@Test
-	public void testReceptAlertOK() throws ForbiddenBidOperation
-	{
-		ench = vend.creerEnchere(new Produit("idp", "desc"), dateLimite, 11.0, 15.5);
-		Offre o = this.ach.emettreOffre(ench, prixOffre);
+	public void testVendeurReceptAlertOK() throws ForbiddenBidOperation {
+		ench = vend.creerEnchere(new Produit("idp", "desc"), dateLimite, 11.0,
+				15.5);
+		// Doit etre notifié de la surrenchère
+		this.ach.emettreOffre(ench, prixOffre);
+		Assert.assertEquals(ench.getNumEnchere(), ((User) vend)
+				.getDerniereAlerte().getEnchere().getNumEnchere());
+	}
 
-		Assert.assertEquals(ench.getNumEnchere(), ((User)vend).getDerniereAlerte().getEnchere().getNumEnchere());
+	/**
+	 * Test de la reception de l'alerte par plusieurs acheteurs (la classe user
+	 * s'enregistre automatiquement sur les alertes de surrenchere à l'emission
+	 * d'une offre.
+	 * 
+	 * @throws ForbiddenBidOperation
+	 */
+	@Test
+	public void testAcheteurReceptAlertOK() throws ForbiddenBidOperation {
+		ench = vend.creerEnchere(new Produit("idp", "desc"), dateLimite, 11.0,
+				26.0);
+		Acheteur ach2 = new User("loginAcheteur", "sonNom", "sonPrénom");
+		this.ach.emettreOffre(ench, 20);
+		ach2.emettreOffre(ench, 36.0);
+		Assert.assertEquals(((User) ach2).getDerniereAlerte(),
+				((User) ach).getDerniereAlerte());
 	}
 
 }
